@@ -1,9 +1,18 @@
 <?php
 
+require_once __DIR__ . '/../Core/Database.php';
+require_once __DIR__ . '/../Models/Contact.php';
+
 class ContactController {
 
     public function index() {
-        echo "<h1>Contact Index Test</h1>";
+        
+        $contacts = Contact::all();
+
+        echo '<h1>Contacts</h1>';
+        echo '<pre>';
+        print_r($contacts);
+        echo '</pre>';
     }
 
     public function create() {
