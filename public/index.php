@@ -11,24 +11,31 @@ $personModel = new Person($db);
 
 $detailsModel = new PersonDetails($db);
 
+
+$search = $_GET['search'] ?? '';
+
 $rowsPerPage = 5; // koliko kontakata po stranici
 $currentPage = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
 
-$totalRows = $personModel->getCount();
+$totalRows = $personModel->getCountWithSearch($search);
 $totalPages = ceil($totalRows / $rowsPerPage);
 
 $offset = ($currentPage - 1) * $rowsPerPage;
-$persons = $personModel->getPaginatedWithDetails($rowsPerPage, $offset);
+$persons = $personModel->getPaginatedWithDetailsAndSearch($search, $rowsPerPage, $offset);
+
 
 ?>
 
 
 
-<h1>All Persons</h1>
+<h1><a href="index.php" style="text-decoration: none;">Address Book</a></h1>
+<form method="get" action="">
+    <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Search by name, email, city...">
+    <button type="submit">Search</button>
+</form>
 <a href="create.php">Add New Person</a>
 <table border="1" cellpadding="5" cellspacing="0">
     <tr>
-        <th>ID</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Nickname</th>
@@ -41,7 +48,6 @@ $persons = $personModel->getPaginatedWithDetails($rowsPerPage, $offset);
         $details = $detailsModel->getByPersonId($p['id']);
     ?>
     <tr>
-        <td><?= $p['id'] ?></td>
         <td><?= htmlspecialchars($p['first_name']) ?></td>
         <td><?= htmlspecialchars($p['last_name']) ?></td>
         <td><?= htmlspecialchars($p['nickname']) ?></td>
@@ -57,7 +63,7 @@ $persons = $personModel->getPaginatedWithDetails($rowsPerPage, $offset);
 </table>
 <div>
     <?php if ($currentPage > 1): ?>
-        <a href="?page=<?= $currentPage - 1 ?>">&laquo; Previous</a>
+        <a href="?page=<?= $currentPage - 1 ?>&search=<?= urlencode($search) ?>">&laquo; Prev</a>
     <?php endif; ?>
 
     <?php for ($p = 1; $p <= $totalPages; $p++): ?>
@@ -69,6 +75,6 @@ $persons = $personModel->getPaginatedWithDetails($rowsPerPage, $offset);
     <?php endfor; ?>
 
     <?php if ($currentPage < $totalPages): ?>
-        <a href="?page=<?= $currentPage + 1 ?>">Next &raquo;</a>
+        <a href="?page=<?= $currentPage + 1 ?>&search=<?= urlencode($search) ?>"> Next &raquo;</a>
     <?php endif; ?>
 </div>

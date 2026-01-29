@@ -91,6 +91,44 @@ class Person
         return (int) $stmt->fetchColumn();
     }
 
+    public function getPaginatedWithDetailsAndSearch(string $search, int $limit, int $offset): array
+    {
+        $searchTerm = "%$search%";
+
+        $stmt = $this->db->prepare(
+            "SELECT p.*, d.street, d.number, d.city, d.zip_code, d.country, d.email, d.phone_1, d.phone_2
+            FROM person p
+            LEFT JOIN person_details d ON p.id = d.person_id
+            WHERE p.first_name LIKE :search OR p.last_name LIKE :search OR p.nickname LIKE :search OR d.email LIKE :search OR d.city LIKE :search
+            ORDER BY p.last_name, p.first_name
+            LIMIT :limit OFFSET :offset"
+        );
+
+        $stmt->bindValue(':search', $searchTerm, PDO::PARAM_STR);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getCountWithSearch(string $search): int
+    {
+        $searchTerm = "%$search%";
+
+        $stmt = $this->db->prepare(
+            "SELECT COUNT(*) 
+            FROM person p
+            LEFT JOIN person_details d ON p.id = d.person_id
+            WHERE p.first_name LIKE :search OR p.last_name LIKE :search OR p.nickname LIKE :search OR d.email LIKE :search OR d.city LIKE :search"
+        );
+
+        $stmt->bindValue(':search', $searchTerm, PDO::PARAM_STR);
+        $stmt->execute();
+        return (int) $stmt->fetchColumn();
+    }
+
+
     public function getAllWithDetails(): array
     {
         $stmt = $this->db->query(
