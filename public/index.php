@@ -1,12 +1,15 @@
 <?php
 require_once __DIR__ . '/../classes/Database.php';
 require_once __DIR__ . '/../classes/Person.php';
+require_once __DIR__ . '/../classes/PersonDetails.php';
 
 // konekcija ka bazi
 $db = (new Database())->getConnection();
 
 // kreiramo model
 $personModel = new Person($db);
+
+$detailsModel = new PersonDetails($db);
 
 // dohvat svih osoba
 $persons = $personModel->getAll();
@@ -20,18 +23,26 @@ $persons = $personModel->getAll();
         <th>First Name</th>
         <th>Last Name</th>
         <th>Nickname</th>
-        <th>Actions</th>
+        <th>City</th>
+        <th>Email</th>
+        <th>Actions</th> <!-- samo za person CRUD -->
     </tr>
-    <?php foreach ($persons as $p): ?>
-        <tr>
-            <td><?= $p['id'] ?></td>
-            <td><?= htmlspecialchars($p['first_name']) ?></td>
-            <td><?= htmlspecialchars($p['last_name']) ?></td>
-            <td><?= htmlspecialchars($p['nickname']) ?></td>
-            <td>
-                <a href="edit.php?id=<?= $p['id'] ?>">Edit</a>
-                <a href="delete.php?id=<?= $p['id'] ?>" onclick="return confirm('Are you sure?')">Delete</a>
-            </td>
-        </tr>
+
+    <?php foreach ($persons as $p):
+        $details = $detailsModel->getByPersonId($p['id']);
+    ?>
+    <tr>
+        <td><?= $p['id'] ?></td>
+        <td><?= htmlspecialchars($p['first_name']) ?></td>
+        <td><?= htmlspecialchars($p['last_name']) ?></td>
+        <td><?= htmlspecialchars($p['nickname']) ?></td>
+        <td><?= htmlspecialchars($details['city'] ?? '') ?></td>
+        <td><?= htmlspecialchars($details['email'] ?? '') ?></td>
+        <td>
+            <a href="view.php?id=<?= $p['id'] ?>">See More</a>
+            <a href="edit.php?id=<?= $p['id'] ?>">Edit</a>
+            <a href="delete.php?id=<?= $p['id'] ?>" onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
     <?php endforeach; ?>
 </table>
