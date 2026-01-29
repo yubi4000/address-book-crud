@@ -45,4 +45,26 @@ class PersonDetails
             'person_id'  => $personId
         ]);
     }
+
+    public function create(int $personId, array $data = [])
+    {
+        $stmt = $this->db->prepare("
+            INSERT INTO person_details
+            (person_id, street, number, city, zip_code, country, email, phone_1, phone_2)
+            VALUES
+            (:person_id, :street, :number, :city, :zip_code, :country, :email, :phone_1, :phone_2)
+        ");
+
+        $stmt->execute([
+            'person_id' => $personId,
+            'street'    => $data['street'] ?? '',
+            'number'    => $data['number'] ?? '',
+            'city'      => $data['city'] ?? '',
+            'zip_code'  => $data['zip_code'] ?? '',
+            'country'   => $data['country'] ?? '',
+            'email'     => $data['email'] ?? '',
+            'phone_1'   => $data['phone_1'] ?? '',
+            'phone_2'   => $data['phone_2'] ?? ''
+        ]);
+    }
 }

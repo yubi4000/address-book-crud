@@ -25,18 +25,20 @@ class Person
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function create(array $data): bool
+    public function create(array $data): int
     {
         $stmt = $this->db->prepare(
             "INSERT INTO person (first_name, last_name, nickname)
              VALUES (:first_name, :last_name, :nickname)"
         );
 
-        return $stmt->execute([
+        $stmt->execute([
             'first_name' => $data['first_name'],
             'last_name'  => $data['last_name'],
             'nickname'   => $data['nickname'],
         ]);
+
+        return (int) $this->db->lastInsertId();
     }
 
     public function update(int $id, array $data): bool
@@ -63,6 +65,24 @@ class Person
             "DELETE FROM person WHERE id = :id"
         );
         return $stmt->execute(['id' => $id]);
+    }
+
+    // pagination
+    public function getAllPaginated(int $limit, int $offset): array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT * FROM person ORDER BY last_name, first_name LIMIT :limit OFFSET :offset"
+        );
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getCount(): int
+    {
+        $stmt = $this->db->query("SELECT COUNT(*) FROM person");
+        return (int) $stmt->fetchColumn();
     }
 }
 
