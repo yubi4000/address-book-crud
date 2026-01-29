@@ -68,14 +68,20 @@ class Person
     }
 
     // pagination
-    public function getAllPaginated(int $limit, int $offset): array
+    public function getPaginatedWithDetails(int $limit, int $offset): array
     {
         $stmt = $this->db->prepare(
-            "SELECT * FROM person ORDER BY last_name, first_name LIMIT :limit OFFSET :offset"
+            "SELECT p.*, d.street, d.number, d.city, d.zip_code, d.country, d.email, d.phone_1, d.phone_2
+            FROM person p
+            LEFT JOIN person_details d ON p.id = d.person_id
+            ORDER BY p.last_name, p.first_name
+            LIMIT :limit OFFSET :offset"
         );
+
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -83,6 +89,17 @@ class Person
     {
         $stmt = $this->db->query("SELECT COUNT(*) FROM person");
         return (int) $stmt->fetchColumn();
+    }
+
+    public function getAllWithDetails(): array
+    {
+        $stmt = $this->db->query(
+            "SELECT p.*, d.street, d.number, d.city, d.zip_code, d.country, d.email, d.phone_1, d.phone_2
+            FROM person p
+            LEFT JOIN person_details d ON p.id = d.person_id
+            ORDER BY p.last_name, p.first_name"
+        );
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 
