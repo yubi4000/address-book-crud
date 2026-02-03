@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../classes/Database.php';
 require_once __DIR__ . '/../classes/Person.php';
+require_once __DIR__ . '/partials/csrf.php';
 
 // konekcija ka bazi
 $db = (new Database())->getConnection();
@@ -78,7 +79,11 @@ require __DIR__ . '/partials/pagination.php';
                     <td>
                         <a href="view.php?id=<?= $p['id'] ?>" class="btn btn-warning btn-sm">See More</a>
                         <a href="edit.php?id=<?= $p['id'] ?>" class="btn btn-default btn-sm">Edit</a>
-                        <a href="delete.php?id=<?= $p['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                        <form method="post" action="delete.php" style="display:inline;">
+                            <?= csrf_field() ?>
+                            <input type="hidden" name="id" value="<?= (int) $p['id'] ?>">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
                     </td>
                 </tr>
                 <?php endforeach; ?>

@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../classes/Database.php';
 require_once __DIR__ . '/../classes/Person.php';
 require_once __DIR__ . '/../classes/PersonDetails.php';
+require_once __DIR__ . '/partials/csrf.php';
 
 $db = (new Database())->getConnection();
 
@@ -48,6 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $normalizedEmail = $detailsInput['email'];
     $phone1 = $detailsInput['phone_1'];
     $phone2 = $detailsInput['phone_2'];
+
+    if (!csrf_verify()) {
+        $errors['csrf'] = 'Invalid form submission. Please try again.';
+    }
 
     if ($firstName === '') {
         $errors['first_name'] = 'First name is required';
@@ -141,7 +146,11 @@ require __DIR__ . '/partials/header.php';
         <div class="row col-md-12 col-md-offset-0">
             <h1>Edit Person</h1>
             <p class="text-muted"><span class="text-danger">*</span> Required fields</p>
+            <?php if (isset($errors['csrf'])): ?>
+                <p class="text-danger"><?= $errors['csrf'] ?></p>
+            <?php endif; ?>
             <form method="post">
+                <?= csrf_field() ?>
                 <div class="form-group">
                     <label>First Name: <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" name="first_name" value="<?= htmlspecialchars($person['first_name']) ?>" required>
