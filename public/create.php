@@ -17,43 +17,83 @@ $insertedData = [];
 // ako je forma submitovana
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $insertedData = $_POST;
+    $firstName = ucfirst(strtolower(trim($_POST['first_name'] ?? '')));
+    $lastName = ucfirst(strtolower(trim($_POST['last_name'] ?? '')));
+    $nickname = ucfirst(strtolower(trim($_POST['nickname'] ?? '')));
+    $street = trim($_POST['street'] ?? '');
+    $number = trim($_POST['number'] ?? '');
+    $city = ucfirst(strtolower(trim($_POST['city'] ?? '')));
+    $zipCode = trim($_POST['zip_code'] ?? '');
+    $country = ucfirst(strtolower(trim($_POST['country'] ?? '')));
+    $normalizedEmail = strtolower(trim($_POST['email'] ?? ''));
+    $phone1 = trim($_POST['phone_1'] ?? '');
+    $phone2 = trim($_POST['phone_2'] ?? '');
+
+    $insertedData = [
+        'first_name' => $firstName,
+        'last_name'  => $lastName,
+        'nickname'   => $nickname,
+        'street'     => $street,
+        'number'     => $number,
+        'city'       => $city,
+        'zip_code'   => $zipCode,
+        'country'    => $country,
+        'email'      => $normalizedEmail,
+        'phone_1'    => $phone1,
+        'phone_2'    => $phone2,
+    ];
 
     // required fields error messages
-    if (empty($_POST['first_name'])) {
+    if ($firstName === '') {
         $errors['first_name'] = 'First name is required';
     }
 
-    if (empty($_POST['last_name'])) {
+    if ($lastName === '') {
         $errors['last_name'] = 'Last name is required';
     }
 
-    if (empty($_POST['email'])) {
+    if ($normalizedEmail === '') {
         $errors['email'] = 'Email is required';
-    } elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+    } elseif (!filter_var($normalizedEmail, FILTER_VALIDATE_EMAIL)) {
         $errors['email'] = 'Invalid email format';
+    }
+
+    if ($phone1 === '') {
+        $errors['phone_1'] = 'Phone 1 is required';
+    } elseif (!ctype_digit($phone1)) {
+        $errors['phone_1'] = 'Phone 1 must be numeric';
+    }
+
+    if ($zipCode === '') {
+        $errors['zip_code'] = 'Zip code is required';
+    } elseif (!ctype_digit($zipCode)) {
+        $errors['zip_code'] = 'Zip code must be numeric';
+    }
+
+    if ($phone2 !== '' && !ctype_digit($phone2)) {
+        $errors['phone_2'] = 'Phone 2 must be numeric';
     }
 
     if (empty($errors)) {
 
         $personId = $personModel->create([
 
-            'first_name' => $_POST['first_name'],
-            'last_name'  => $_POST['last_name'],
-            'nickname'   => $_POST['nickname'] ?? ''
+            'first_name' => $firstName,
+            'last_name'  => $lastName,
+            'nickname'   => $nickname
 
         ]);
 
         $detailsModel->create($personId, [
             
-            'street'   => $_POST['street'] ?? '',
-            'number'   => $_POST['number'] ?? '',
-            'city'     => $_POST['city'] ?? '',
-            'zip_code' => $_POST['zip_code'] ?? '',
-            'country'  => $_POST['country'] ?? '',
-            'email'    => $_POST['email'],
-            'phone_1'  => $_POST['phone_1'] ?? '',
-            'phone_2'  => $_POST['phone_2'] ?? ''
+            'street'   => $street,
+            'number'   => $number,
+            'city'     => $city,
+            'zip_code' => $zipCode,
+            'country'  => $country,
+            'email'    => $normalizedEmail,
+            'phone_1'  => $phone1,
+            'phone_2'  => $phone2
 
         ]);
 
@@ -75,7 +115,7 @@ require __DIR__ . '/partials/header.php';
             <form method="post">
                 <div class="form-group">
                     <label>First Name: <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="first_name" value="<?= htmlspecialchars($insertedData['first_name'] ?? '') ?>">
+                    <input type="text" class="form-control" name="first_name" value="<?= htmlspecialchars($insertedData['first_name'] ?? '') ?>" required>
                     <?php if (isset($errors['first_name'])): ?>
                         <p class="text-danger"><?= $errors['first_name'] ?></p>
                     <?php endif; ?>
@@ -83,7 +123,7 @@ require __DIR__ . '/partials/header.php';
 
                 <div class="form-group">
                     <label>Last Name: <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="last_name" value="<?= htmlspecialchars($insertedData['last_name'] ?? '') ?>">
+                    <input type="text" class="form-control" name="last_name" value="<?= htmlspecialchars($insertedData['last_name'] ?? '') ?>" required>
                     <?php if (isset($errors['last_name'])): ?>
                         <p class="text-danger"><?= $errors['last_name'] ?></p>
                     <?php endif; ?>
@@ -111,7 +151,10 @@ require __DIR__ . '/partials/header.php';
 
                 <div class="form-group">
                     <label>Zip Code:</label>
-                    <input type="text" class="form-control" name="zip_code" value="<?= htmlspecialchars($insertedData['zip_code'] ?? '') ?>">
+                    <input type="text" class="form-control" name="zip_code" value="<?= htmlspecialchars($insertedData['zip_code'] ?? '') ?>" required>
+                    <?php if (isset($errors['zip_code'])): ?>
+                        <p class="text-danger"><?= $errors['zip_code'] ?></p>
+                    <?php endif; ?>
                 </div>
 
                 <div class="form-group">
@@ -121,7 +164,7 @@ require __DIR__ . '/partials/header.php';
 
                 <div class="form-group">
                     <label>Email: <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="email" value="<?= htmlspecialchars(strtolower($insertedData['email'] ?? '')) ?>">
+                    <input type="text" class="form-control" name="email" value="<?= htmlspecialchars(strtolower($insertedData['email'] ?? '')) ?>" required>
                     <?php if (isset($errors['email'])): ?>
                         <p class="text-danger"><?= $errors['email'] ?></p>
                     <?php endif; ?>
@@ -129,12 +172,18 @@ require __DIR__ . '/partials/header.php';
 
                 <div class="form-group">
                     <label>Phone 1:</label>
-                    <input type="text" class="form-control" name="phone_1" value="<?= htmlspecialchars($insertedData['phone_1'] ?? '') ?>">
+                    <input type="text" class="form-control" name="phone_1" value="<?= htmlspecialchars($insertedData['phone_1'] ?? '') ?>" required>
+                    <?php if (isset($errors['phone_1'])): ?>
+                        <p class="text-danger"><?= $errors['phone_1'] ?></p>
+                    <?php endif; ?>
                 </div>
 
                 <div class="form-group">
                     <label>Phone 2:</label>
                     <input type="text" class="form-control" name="phone_2" value="<?= htmlspecialchars($insertedData['phone_2'] ?? '') ?>">
+                    <?php if (isset($errors['phone_2'])): ?>
+                        <p class="text-danger"><?= $errors['phone_2'] ?></p>
+                    <?php endif; ?>
                 </div>
 
                 <button type="submit" class="btn btn-warning">Save</button>
