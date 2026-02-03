@@ -63,59 +63,114 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add New Person</title>
 
-<h1>Add New Person</h1>
-<form method="post">
-    <label>First Name:<span style="color:red">*</span></label><br>
-    <input type="text" name="first_name" value="<?= htmlspecialchars($insertedData['first_name'] ?? '') ?>"><br><br>
-    <?php if (isset($errors['first_name'])): ?>
-        <div style="color:red">
-            <?= $errors['first_name'] ?>
+    <!-- Bootstrap 3 (CDN) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.php">Address Book</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbar-main">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="create.php">Add New Person</a></li>
+                </ul>
+            </div>
         </div>
-    <?php endif; ?>
+    </nav>
 
+    <div class="container">
+        <div class="row col-md-12 col-md-offset-0">
+            <h1>Add New Person</h1>
+            <form method="post">
+                <div class="form-group">
+                    <label>First Name: <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="first_name" value="<?= htmlspecialchars($insertedData['first_name'] ?? '') ?>">
+                    <?php if (isset($errors['first_name'])): ?>
+                        <p class="text-danger"><?= $errors['first_name'] ?></p>
+                    <?php endif; ?>
+                </div>
 
-    <label>Last Name:<span style="color:red">*</span></label><br>
-    <input type="text" name="last_name" value="<?= htmlspecialchars($insertedData['last_name'] ?? '') ?>"><br><br>
-        <?php if (isset($errors['last_name'])): ?>
-        <div style="color:red">
-            <?= $errors['last_name'] ?>
+                <div class="form-group">
+                    <label>Last Name: <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="last_name" value="<?= htmlspecialchars($insertedData['last_name'] ?? '') ?>">
+                    <?php if (isset($errors['last_name'])): ?>
+                        <p class="text-danger"><?= $errors['last_name'] ?></p>
+                    <?php endif; ?>
+                </div>
+
+                <div class="form-group">
+                    <label>Nickname:</label>
+                    <input type="text" class="form-control" name="nickname" value="<?= htmlspecialchars($insertedData['nickname'] ?? '') ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>Street:</label>
+                    <input type="text" class="form-control" name="street" value="<?= htmlspecialchars($insertedData['street'] ?? '') ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>Number:</label>
+                    <input type="text" class="form-control" name="number" value="<?= htmlspecialchars($insertedData['number'] ?? '') ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>City:</label>
+                    <input type="text" class="form-control" name="city" value="<?= htmlspecialchars($insertedData['city'] ?? '') ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>Zip Code:</label>
+                    <input type="text" class="form-control" name="zip_code" value="<?= htmlspecialchars($insertedData['zip_code'] ?? '') ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>Country:</label>
+                    <input type="text" class="form-control" name="country" value="<?= htmlspecialchars($insertedData['country'] ?? '') ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>Email: <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="email" value="<?= htmlspecialchars($insertedData['email'] ?? '') ?>">
+                    <?php if (isset($errors['email'])): ?>
+                        <p class="text-danger"><?= $errors['email'] ?></p>
+                    <?php endif; ?>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone 1:</label>
+                    <input type="text" class="form-control" name="phone_1" value="<?= htmlspecialchars($insertedData['phone_1'] ?? '') ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>Phone 2:</label>
+                    <input type="text" class="form-control" name="phone_2" value="<?= htmlspecialchars($insertedData['phone_2'] ?? '') ?>">
+                </div>
+
+                <button type="submit" class="btn btn-warning">Save</button>
+                <a href="index.php" class="btn btn-default">Back to list</a>
+            </form>
         </div>
-    <?php endif; ?>
+    </div>
 
-    <label>Nickname:</label><br>
-    <input type="text" name="nickname" value="<?= htmlspecialchars($insertedData['nickname'] ?? '') ?>"><br><br>
-
-    <label>Street:</label><br>
-    <input type="text" name="street" value="<?= htmlspecialchars($insertedData['street'] ?? '') ?>"><br><br>
-
-    <label>Number:</label><br>
-    <input type="text" name="number" value="<?= htmlspecialchars($insertedData['number'] ?? '') ?>"><br><br>
-
-    <label>City:</label><br>
-    <input type="text" name="city" value="<?= htmlspecialchars($insertedData['city'] ?? '') ?>"><br><br>
-
-    <label>Zip Code:</label><br>
-    <input type="text" name="zip_code" value="<?= htmlspecialchars($insertedData['zip_code'] ?? '') ?>"><br><br>
-
-    <label>Country:</label><br>
-    <input type="text" name="country" value="<?= htmlspecialchars($insertedData['country'] ?? '') ?>"><br><br>
-
-    <label>Email:<span style="color:red">*</span></label><br>
-    <input type="text" name="email" value="<?= htmlspecialchars($insertedData['email'] ?? '') ?>"><br><br>
-    <?php if (isset($errors['email'])): ?>
-        <div style="color:red">
-            <?= $errors['email'] ?>
-        </div>
-    <?php endif; ?>        
-
-    <label>Phone 1:</label><br>
-    <input type="text" name="phone_1" value="<?= htmlspecialchars($insertedData['phone_1'] ?? '') ?>"><br><br>
-
-    <label>Phone 2:</label><br>
-    <input type="text" name="phone_2" value="<?= htmlspecialchars($insertedData['phone_2'] ?? '') ?>"><br><br>
-
-    <button type="submit">Save</button>
-</form>
-
-<a href="index.php">Back to list</a>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

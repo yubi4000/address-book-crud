@@ -56,44 +56,106 @@ $details = $detailsModel->getByPersonId($id);
 
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit Person</title>
 
-<h1>Edit Person</h1>
-<form method="post">
-    <label>First Name:</label><br>
-    <input type="text" name="first_name" value="<?= htmlspecialchars($person['first_name']) ?>" required><br><br>
+    <!-- Bootstrap 3 (CDN) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.php">Address Book</a>
+            </div>
 
-    <label>Last Name:</label><br>
-    <input type="text" name="last_name" value="<?= htmlspecialchars($person['last_name']) ?>" required><br><br>
+            <div class="collapse navbar-collapse" id="navbar-main">
+                <ul class="nav navbar-nav">
+                    <li><a href="create.php">Add New Person</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <label>Nickname:</label><br>
-    <input type="text" name="nickname" value="<?= htmlspecialchars($person['nickname']) ?>"><br><br>
+    <div class="container">
+        <div class="row col-md-12 col-md-offset-0">
+            <h1>Edit Person</h1>
+            <form method="post">
+                <div class="form-group">
+                    <label>First Name:</label>
+                    <input type="text" class="form-control" name="first_name" value="<?= htmlspecialchars($person['first_name']) ?>" required>
+                </div>
 
-    <h3>Contact Details</h3>
-    <label>Street:</label><br>
-    <input type="text" name="street" value="<?= htmlspecialchars($details['street'] ?? '') ?>"><br><br>
+                <div class="form-group">
+                    <label>Last Name:</label>
+                    <input type="text" class="form-control" name="last_name" value="<?= htmlspecialchars($person['last_name']) ?>" required>
+                </div>
 
-    <label>Number:</label><br>
-    <input type="text" name="number" value="<?= htmlspecialchars($details['number'] ?? '') ?>"><br><br>
+                <div class="form-group">
+                    <label>Nickname:</label>
+                    <input type="text" class="form-control" name="nickname" value="<?= htmlspecialchars($person['nickname']) ?>">
+                </div>
 
-    <label>City:</label><br>
-    <input type="text" name="city" value="<?= htmlspecialchars($details['city'] ?? '') ?>"><br><br>
+                <h3>Contact Details</h3>
+                <div class="form-group">
+                    <label>Street:</label>
+                    <input type="text" class="form-control" name="street" value="<?= htmlspecialchars($details['street'] ?? '') ?>">
+                </div>
 
-    <label>Zip Code:</label><br>
-    <input type="text" name="zip_code" value="<?= htmlspecialchars($details['zip_code'] ?? '') ?>"><br><br>
+                <div class="form-group">
+                    <label>Number:</label>
+                    <input type="text" class="form-control" name="number" value="<?= htmlspecialchars($details['number'] ?? '') ?>">
+                </div>
 
-    <label>Country:</label><br>
-    <input type="text" name="country" value="<?= htmlspecialchars($details['country'] ?? '') ?>"><br><br>
+                <div class="form-group">
+                    <label>City:</label>
+                    <input type="text" class="form-control" name="city" value="<?= htmlspecialchars($details['city'] ?? '') ?>">
+                </div>
 
-    <label>Email:</label><br>
-    <input type="text" name="email" value="<?= htmlspecialchars($details['email'] ?? '') ?>"><br><br>
+                <div class="form-group">
+                    <label>Zip Code:</label>
+                    <input type="text" class="form-control" name="zip_code" value="<?= htmlspecialchars($details['zip_code'] ?? '') ?>">
+                </div>
 
-    <label>Phone 1:</label><br>
-    <input type="text" name="phone_1" value="<?= htmlspecialchars($details['phone_1'] ?? '') ?>"><br><br>
+                <div class="form-group">
+                    <label>Country:</label>
+                    <input type="text" class="form-control" name="country" value="<?= htmlspecialchars($details['country'] ?? '') ?>">
+                </div>
 
-    <label>Phone 2:</label><br>
-    <input type="text" name="phone_2" value="<?= htmlspecialchars($details['phone_2'] ?? '') ?>"><br><br>
-    
-    <button type="submit">Update</button>
-</form>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="text" class="form-control" name="email" value="<?= htmlspecialchars($details['email'] ?? '') ?>">
+                </div>
 
-<a href="index.php">Back to list</a>
+                <div class="form-group">
+                    <label>Phone 1:</label>
+                    <input type="text" class="form-control" name="phone_1" value="<?= htmlspecialchars($details['phone_1'] ?? '') ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>Phone 2:</label>
+                    <input type="text" class="form-control" name="phone_2" value="<?= htmlspecialchars($details['phone_2'] ?? '') ?>">
+                </div>
+
+                <button type="submit" class="btn btn-warning">Update</button>
+                <a href="index.php" class="btn btn-default">Back to list</a>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>
