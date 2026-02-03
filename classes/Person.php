@@ -63,6 +63,12 @@ class Person
         ]);
     }
 
+    /**
+     * Normalize person input for consistent storage.
+     *
+     * @param array $data Raw person input.
+     * @return array Normalized person input.
+     */
     public function normalizeInput(array $data): array
     {
         return [
@@ -104,6 +110,16 @@ class Person
         return (int) $stmt->fetchColumn();
     }
 
+    /**
+     * Fetch paginated contacts with details, search, and safe sorting.
+     *
+     * @param string $search Search term.
+     * @param int $limit Page size.
+     * @param int $offset Result offset.
+     * @param string $sort Sort column (whitelisted).
+     * @param string $dir Sort direction (asc|desc).
+     * @return array Result rows.
+     */
     public function getPaginatedWithDetailsAndSearch(
         string $search,
         int $limit,

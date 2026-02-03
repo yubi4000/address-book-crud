@@ -72,6 +72,12 @@ class PersonDetails
         ]);
     }
 
+    /**
+     * Normalize details input for consistent storage.
+     *
+     * @param array $data Raw details input.
+     * @return array Normalized details input.
+     */
     public function normalizeInput(array $data): array
     {
         return [
