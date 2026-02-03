@@ -20,6 +20,8 @@ class PersonDetails
 
     public function update(int $personId, array $data): void
     {
+        $data = $this->normalizeInput($data);
+
         $stmt = $this->db->prepare("
             UPDATE person_details 
             SET street = :street,
@@ -48,6 +50,8 @@ class PersonDetails
 
     public function create(int $personId, array $data = [])
     {
+        $data = $this->normalizeInput($data);
+
         $stmt = $this->db->prepare("
             INSERT INTO person_details
             (person_id, street, number, city, zip_code, country, email, phone_1, phone_2)
@@ -66,5 +70,19 @@ class PersonDetails
             'phone_1'   => $data['phone_1'] ?? '',
             'phone_2'   => $data['phone_2'] ?? ''
         ]);
+    }
+
+    public function normalizeInput(array $data): array
+    {
+        return [
+            'street'   => trim($data['street'] ?? ''),
+            'number'   => trim($data['number'] ?? ''),
+            'city'     => ucfirst(strtolower(trim($data['city'] ?? ''))),
+            'zip_code' => trim($data['zip_code'] ?? ''),
+            'country'  => ucfirst(strtolower(trim($data['country'] ?? ''))),
+            'email'    => strtolower(trim($data['email'] ?? '')),
+            'phone_1'  => trim($data['phone_1'] ?? ''),
+            'phone_2'  => trim($data['phone_2'] ?? '')
+        ];
     }
 }

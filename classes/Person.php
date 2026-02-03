@@ -27,6 +27,8 @@ class Person
 
     public function create(array $data): int
     {
+        $data = $this->normalizeInput($data);
+
         $stmt = $this->db->prepare(
             "INSERT INTO person (first_name, last_name, nickname)
              VALUES (:first_name, :last_name, :nickname)"
@@ -43,6 +45,8 @@ class Person
 
     public function update(int $id, array $data): bool
     {
+        $data = $this->normalizeInput($data);
+
         $stmt = $this->db->prepare(
             "UPDATE person
              SET first_name = :first_name,
@@ -57,6 +61,15 @@ class Person
             'last_name'  => $data['last_name'],
             'nickname'   => $data['nickname'],
         ]);
+    }
+
+    public function normalizeInput(array $data): array
+    {
+        return [
+            'first_name' => ucfirst(strtolower(trim($data['first_name'] ?? ''))),
+            'last_name'  => ucfirst(strtolower(trim($data['last_name'] ?? ''))),
+            'nickname'   => ucfirst(strtolower(trim($data['nickname'] ?? ''))),
+        ];
     }
 
     public function delete(int $id): bool

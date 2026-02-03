@@ -17,17 +17,34 @@ $insertedData = [];
 // ako je forma submitovana
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $firstName = ucfirst(strtolower(trim($_POST['first_name'] ?? '')));
-    $lastName = ucfirst(strtolower(trim($_POST['last_name'] ?? '')));
-    $nickname = ucfirst(strtolower(trim($_POST['nickname'] ?? '')));
-    $street = trim($_POST['street'] ?? '');
-    $number = trim($_POST['number'] ?? '');
-    $city = ucfirst(strtolower(trim($_POST['city'] ?? '')));
-    $zipCode = trim($_POST['zip_code'] ?? '');
-    $country = ucfirst(strtolower(trim($_POST['country'] ?? '')));
-    $normalizedEmail = strtolower(trim($_POST['email'] ?? ''));
-    $phone1 = trim($_POST['phone_1'] ?? '');
-    $phone2 = trim($_POST['phone_2'] ?? '');
+    $personInput = $personModel->normalizeInput([
+        'first_name' => $_POST['first_name'] ?? '',
+        'last_name'  => $_POST['last_name'] ?? '',
+        'nickname'   => $_POST['nickname'] ?? ''
+    ]);
+
+    $detailsInput = $detailsModel->normalizeInput([
+        'street'   => $_POST['street'] ?? '',
+        'number'   => $_POST['number'] ?? '',
+        'city'     => $_POST['city'] ?? '',
+        'zip_code' => $_POST['zip_code'] ?? '',
+        'country'  => $_POST['country'] ?? '',
+        'email'    => $_POST['email'] ?? '',
+        'phone_1'  => $_POST['phone_1'] ?? '',
+        'phone_2'  => $_POST['phone_2'] ?? ''
+    ]);
+
+    $firstName = $personInput['first_name'];
+    $lastName = $personInput['last_name'];
+    $nickname = $personInput['nickname'];
+    $street = $detailsInput['street'];
+    $number = $detailsInput['number'];
+    $city = $detailsInput['city'];
+    $zipCode = $detailsInput['zip_code'];
+    $country = $detailsInput['country'];
+    $normalizedEmail = $detailsInput['email'];
+    $phone1 = $detailsInput['phone_1'];
+    $phone2 = $detailsInput['phone_2'];
 
     $insertedData = [
         'first_name' => $firstName,
@@ -112,6 +129,7 @@ require __DIR__ . '/partials/header.php';
     <div class="container">
         <div class="row col-md-12 col-md-offset-0">
             <h1>Add New Person</h1>
+            <p class="text-muted"><span class="text-danger">*</span> Required fields</p>
             <form method="post">
                 <div class="form-group">
                     <label>First Name: <span class="text-danger">*</span></label>
@@ -141,7 +159,7 @@ require __DIR__ . '/partials/header.php';
 
                 <div class="form-group">
                     <label>Number:</label>
-                    <input type="text" class="form-control" name="number" value="<?= htmlspecialchars($insertedData['number'] ?? '') ?>">
+                    <input type="text" class="form-control" name="number" value="<?= htmlspecialchars($insertedData['number'] ?? '') ?>" inputmode="numeric" pattern="[0-9]+" title="Numbers only">
                 </div>
 
                 <div class="form-group">
@@ -150,8 +168,8 @@ require __DIR__ . '/partials/header.php';
                 </div>
 
                 <div class="form-group">
-                    <label>Zip Code:</label>
-                    <input type="text" class="form-control" name="zip_code" value="<?= htmlspecialchars($insertedData['zip_code'] ?? '') ?>" required>
+                    <label>Zip Code: <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="zip_code" value="<?= htmlspecialchars($insertedData['zip_code'] ?? '') ?>" required inputmode="numeric" pattern="[0-9]+" title="Numbers only">
                     <?php if (isset($errors['zip_code'])): ?>
                         <p class="text-danger"><?= $errors['zip_code'] ?></p>
                     <?php endif; ?>
@@ -164,15 +182,15 @@ require __DIR__ . '/partials/header.php';
 
                 <div class="form-group">
                     <label>Email: <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="email" value="<?= htmlspecialchars(strtolower($insertedData['email'] ?? '')) ?>" required>
+                    <input type="email" class="form-control" name="email" value="<?= htmlspecialchars(strtolower($insertedData['email'] ?? '')) ?>" required>
                     <?php if (isset($errors['email'])): ?>
                         <p class="text-danger"><?= $errors['email'] ?></p>
                     <?php endif; ?>
                 </div>
 
                 <div class="form-group">
-                    <label>Phone 1:</label>
-                    <input type="text" class="form-control" name="phone_1" value="<?= htmlspecialchars($insertedData['phone_1'] ?? '') ?>" required>
+                    <label>Phone 1: <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="phone_1" value="<?= htmlspecialchars($insertedData['phone_1'] ?? '') ?>" required inputmode="numeric" pattern="[0-9]+" title="Numbers only">
                     <?php if (isset($errors['phone_1'])): ?>
                         <p class="text-danger"><?= $errors['phone_1'] ?></p>
                     <?php endif; ?>
@@ -180,7 +198,7 @@ require __DIR__ . '/partials/header.php';
 
                 <div class="form-group">
                     <label>Phone 2:</label>
-                    <input type="text" class="form-control" name="phone_2" value="<?= htmlspecialchars($insertedData['phone_2'] ?? '') ?>">
+                    <input type="text" class="form-control" name="phone_2" value="<?= htmlspecialchars($insertedData['phone_2'] ?? '') ?>" inputmode="numeric" pattern="[0-9]+" title="Numbers only">
                     <?php if (isset($errors['phone_2'])): ?>
                         <p class="text-danger"><?= $errors['phone_2'] ?></p>
                     <?php endif; ?>

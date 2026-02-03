@@ -16,24 +16,12 @@ function render_pagination(int $currentPage, int $totalPages, string $search, st
         echo '<li><a href="?page=' . ($currentPage - 1) . '&search=' . urlencode($search) . '&sort=' . urlencode($sort) . '&dir=' . urlencode($dir) . '">&laquo;</a></li>';
     }
 
-    $window = 2;
-    $start = max(1, $currentPage - $window);
-    $end = min($totalPages, $currentPage + $window);
-
-    if ($start > 1) {
-        echo '<li class="disabled"><a href="#">...</a></li>';
-    }
-
-    for ($p = $start; $p <= $end; $p++) {
+    for ($p = 1; $p <= $totalPages; $p++) {
         if ($p === $currentPage) {
             echo '<li class="active"><a href="#">' . $p . '</a></li>';
         } else {
             echo '<li><a href="?page=' . $p . '&search=' . urlencode($search) . '&sort=' . urlencode($sort) . '&dir=' . urlencode($dir) . '">' . $p . '</a></li>';
         }
-    }
-
-    if ($end < $totalPages) {
-        echo '<li class="disabled"><a href="#">...</a></li>';
     }
 
     if ($currentPage < $totalPages) {
