@@ -33,7 +33,19 @@
                         <input type="hidden" name="sort" value="<?= htmlspecialchars($sort ?? '') ?>">
                         <input type="hidden" name="dir" value="<?= htmlspecialchars($dir ?? '') ?>">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="search" value="<?= htmlspecialchars($search ?? '') ?>" placeholder="Search by name, email, city...">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="search" value="<?= htmlspecialchars($search ?? '') ?>" placeholder="Search by name, email, city...">
+                                <?php if (!empty($search)): ?>
+                                    <span class="input-group-btn">
+                                        <button
+                                            type="button"
+                                            class="btn btn-default"
+                                            title="Clear"
+                                            onclick="this.form.search.value=''; this.form.submit();"
+                                        >&times;</button>
+                                    </span>
+                                <?php endif; ?>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-warning">Search</button>
                     </form>

@@ -4,6 +4,7 @@ require_once __DIR__ . '/../classes/Database.php';
 require_once __DIR__ . '/../classes/Person.php';
 require_once __DIR__ . '/../classes/PersonDetails.php';
 require_once __DIR__ . '/partials/csrf.php';
+require_once __DIR__ . '/partials/flash.php';
 
 $db = (new Database())->getConnection();
 
@@ -106,6 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $detailsModel->update($id, $detailsData);
 
+        flash_set('status', 'Contact updated successfully.', 'success');
         header('Location: index.php');
         exit;
     }
