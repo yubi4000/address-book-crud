@@ -19,11 +19,11 @@ $allowedSorts = [
     'email'
 ];
 
-$sort = $_GET['sort'] ?? 'last_name';
+$sort = $_GET['sort'] ?? 'first_name';
 $dir  = $_GET['dir'] ?? 'asc';
 
 if (!in_array($sort, $allowedSorts)) {
-    $sort = 'last_name';
+    $sort = 'first_name';
 }
 
 $dir = strtolower($dir) === 'desc' ? 'desc' : 'asc';
@@ -48,46 +48,13 @@ $persons = $personModel->getPaginatedWithDetailsAndSearch(
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Address Book</title>
-
-    <!-- Bootstrap 3 (CDN) -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.php">Address Book</a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="navbar-main">
-                <ul class="nav navbar-nav">
-                    <li><a href="create.php">Add New Person</a></li>
-                </ul>
-                <form class="navbar-form navbar-left pull-right" method="get" action="" role="search">
-                    <input type="hidden" name="sort" value="<?= htmlspecialchars($sort) ?>">
-                    <input type="hidden" name="dir" value="<?= htmlspecialchars($dir) ?>">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Search by name, email, city...">
-                    </div>
-                    <button type="submit" class="btn btn-warning">Search</button>
-                </form>
-            </div>
-        </div>
-    </nav>
+<?php
+$pageTitle = 'Address Book';
+$activePage = 'index';
+$showSearch = true;
+require __DIR__ . '/partials/header.php';
+require __DIR__ . '/partials/pagination.php';
+?>
 
     <div class="container">
         <div class="row col-md-12 col-md-offset-0">
@@ -119,25 +86,6 @@ $persons = $personModel->getPaginatedWithDetailsAndSearch(
         </div>
     </div>
 
-    <ul class="pager">
-        <?php if ($currentPage > 1): ?>
-            <li><a href="?page=<?= $currentPage - 1 ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>&dir=<?= urlencode($dir) ?>">&laquo; Prev</a></li>
-        <?php endif; ?>
+    <?php render_pagination($currentPage, $totalPages, $search, $sort, $dir); ?>
 
-        <?php for ($p = 1; $p <= $totalPages; $p++): ?>
-            <?php if ($p === $currentPage): ?>
-                <li class="active"><a href="#"><?= $p ?></a></li>
-            <?php else: ?>
-                <li><a href="?page=<?= $p ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>&dir=<?= urlencode($dir) ?>"><?= $p ?></a></li>
-            <?php endif; ?>
-        <?php endfor; ?>
-
-        <?php if ($currentPage < $totalPages): ?>
-            <li><a href="?page=<?= $currentPage + 1 ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>&dir=<?= urlencode($dir) ?>"> Next &raquo;</a></li>
-        <?php endif; ?>
-    </ul>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</body>
-</html>
+<?php require __DIR__ . '/partials/footer.php'; ?>

@@ -95,7 +95,7 @@ class Person
         string $search,
         int $limit,
         int $offset,
-        string $sort = 'last_name',
+        string $sort = 'first_name',
         string $dir = 'asc'
     ): array
     {
@@ -109,7 +109,7 @@ class Person
             'email'      => 'd.email'
         ];
 
-        $sortColumn = $allowedSorts[$sort] ?? $allowedSorts['last_name'];
+        $sortColumn = $allowedSorts[$sort] ?? $allowedSorts['first_name'];
         $dir = strtolower($dir) === 'desc' ? 'DESC' : 'ASC';
 
         $stmt = $this->db->prepare(
