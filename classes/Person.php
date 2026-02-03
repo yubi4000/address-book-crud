@@ -72,10 +72,10 @@ class Person
     {
         $stmt = $this->db->prepare(
             "SELECT p.*, d.street, d.number, d.city, d.zip_code, d.country, d.email, d.phone_1, d.phone_2
-            FROM person p
-            LEFT JOIN person_details d ON p.id = d.person_id
-            ORDER BY p.last_name, p.first_name
-            LIMIT :limit OFFSET :offset"
+                    FROM person p
+                    LEFT JOIN person_details d ON p.id = d.person_id
+                    ORDER BY p.first_name, p.last_name ASC
+                    LIMIT :limit OFFSET :offset"
         );
 
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
@@ -100,7 +100,7 @@ class Person
             FROM person p
             LEFT JOIN person_details d ON p.id = d.person_id
             WHERE p.first_name LIKE :search OR p.last_name LIKE :search OR p.nickname LIKE :search OR d.email LIKE :search OR d.city LIKE :search
-            ORDER BY p.last_name, p.first_name
+            ORDER BY p.first_name, p.last_name ASC
             LIMIT :limit OFFSET :offset"
         );
 
@@ -135,7 +135,7 @@ class Person
             "SELECT p.*, d.street, d.number, d.city, d.zip_code, d.country, d.email, d.phone_1, d.phone_2
             FROM person p
             LEFT JOIN person_details d ON p.id = d.person_id
-            ORDER BY p.last_name, p.first_name"
+            ORDER BY p.first_name, p.last_name ASC"
         );
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/../classes/Database.php';
 require_once __DIR__ . '/../classes/Person.php';
 require_once __DIR__ . '/../classes/PersonDetails.php';
@@ -10,7 +11,6 @@ $db = (new Database())->getConnection();
 $personModel = new Person($db);
 
 $detailsModel = new PersonDetails($db);
-
 
 $search = $_GET['search'] ?? '';
 
@@ -52,7 +52,7 @@ $persons = $personModel->getPaginatedWithDetailsAndSearch($search, $rowsPerPage,
         <td><?= htmlspecialchars($p['last_name']) ?></td>
         <td><?= htmlspecialchars($p['nickname']) ?></td>
         <td><?= htmlspecialchars($p['city'] ?? '') ?></td>
-        <td><?= htmlspecialchars($p['email'] ?? '') ?></td>
+        <td><?= htmlspecialchars(strtolower($p['email']) ?? '') ?></td>
         <td>
             <a href="view.php?id=<?= $p['id'] ?>">See More</a>
             <a href="edit.php?id=<?= $p['id'] ?>">Edit</a>

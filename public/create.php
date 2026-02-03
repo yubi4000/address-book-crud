@@ -12,12 +12,12 @@ $personModel = new Person($db);
 $detailsModel = new PersonDetails($db);
 
 $errors = [];
-$old = [];
+$insertedData = [];
 
 // ako je forma submitovana
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $old = $_POST;
+    $insertedData = $_POST;
 
     // required fields error messages
     if (empty($_POST['first_name'])) {
@@ -67,15 +67,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <h1>Add New Person</h1>
 <form method="post">
     <label>First Name:<span style="color:red">*</span></label><br>
-    <input type="text" name="first_name" value="<?= htmlspecialchars($old['first_name'] ?? '') ?>"><br><br>
+    <input type="text" name="first_name" value="<?= htmlspecialchars($insertedData['first_name'] ?? '') ?>"><br><br>
     <?php if (isset($errors['first_name'])): ?>
         <div style="color:red">
             <?= $errors['first_name'] ?>
         </div>
     <?php endif; ?>
 
+
     <label>Last Name:<span style="color:red">*</span></label><br>
-    <input type="text" name="last_name" value="<?= htmlspecialchars($old['last_name'] ?? '') ?>"><br><br>
+    <input type="text" name="last_name" value="<?= htmlspecialchars($insertedData['last_name'] ?? '') ?>"><br><br>
         <?php if (isset($errors['last_name'])): ?>
         <div style="color:red">
             <?= $errors['last_name'] ?>
@@ -83,25 +84,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <label>Nickname:</label><br>
-    <input type="text" name="nickname" value="<?= htmlspecialchars($old['nickname'] ?? '') ?>"><br><br>
+    <input type="text" name="nickname" value="<?= htmlspecialchars($insertedData['nickname'] ?? '') ?>"><br><br>
 
     <label>Street:</label><br>
-    <input type="text" name="street" value="<?= htmlspecialchars($old['street'] ?? '') ?>"><br><br>
+    <input type="text" name="street" value="<?= htmlspecialchars($insertedData['street'] ?? '') ?>"><br><br>
 
     <label>Number:</label><br>
-    <input type="text" name="number" value="<?= htmlspecialchars($old['number'] ?? '') ?>"><br><br>
+    <input type="text" name="number" value="<?= htmlspecialchars($insertedData['number'] ?? '') ?>"><br><br>
 
     <label>City:</label><br>
-    <input type="text" name="city" value="<?= htmlspecialchars($old['city'] ?? '') ?>"><br><br>
+    <input type="text" name="city" value="<?= htmlspecialchars($insertedData['city'] ?? '') ?>"><br><br>
 
     <label>Zip Code:</label><br>
-    <input type="text" name="zip_code" value="<?= htmlspecialchars($old['zip_code'] ?? '') ?>"><br><br>
+    <input type="text" name="zip_code" value="<?= htmlspecialchars($insertedData['zip_code'] ?? '') ?>"><br><br>
 
     <label>Country:</label><br>
-    <input type="text" name="country" value="<?= htmlspecialchars($old['country'] ?? '') ?>"><br><br>
+    <input type="text" name="country" value="<?= htmlspecialchars($insertedData['country'] ?? '') ?>"><br><br>
 
     <label>Email:<span style="color:red">*</span></label><br>
-    <input type="text" name="email" value="<?= htmlspecialchars($old['email'] ?? '') ?>"><br><br>
+    <input type="text" name="email" value="<?= htmlspecialchars($insertedData['email'] ?? '') ?>"><br><br>
     <?php if (isset($errors['email'])): ?>
         <div style="color:red">
             <?= $errors['email'] ?>
@@ -109,10 +110,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>        
 
     <label>Phone 1:</label><br>
-    <input type="text" name="phone_1" value="<?= htmlspecialchars($old['phone_1'] ?? '') ?>"><br><br>
+    <input type="text" name="phone_1" value="<?= htmlspecialchars($insertedData['phone_1'] ?? '') ?>"><br><br>
 
     <label>Phone 2:</label><br>
-    <input type="text" name="phone_2" value="<?= htmlspecialchars($old['phone_2'] ?? '') ?>"><br><br>
+    <input type="text" name="phone_2" value="<?= htmlspecialchars($insertedData['phone_2'] ?? '') ?>"><br><br>
 
     <button type="submit">Save</button>
 </form>
