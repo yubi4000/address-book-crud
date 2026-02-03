@@ -52,7 +52,7 @@ require __DIR__ . '/partials/header.php';
                     <p><strong>City:</strong> <?= htmlspecialchars($details['city']) ?></p>
                     <p><strong>Zip Code:</strong> <?= htmlspecialchars($details['zip_code']) ?></p>
                     <p><strong>Country:</strong> <?= htmlspecialchars($details['country']) ?></p>
-                    <p><strong>Email:</strong> <?= htmlspecialchars($details['email']) ?></p>
+                    <p><strong>Email:</strong> <?= htmlspecialchars(strtolower($details['email'])) ?></p>
                     <p><strong>Phone 1:</strong> <?= htmlspecialchars($details['phone_1']) ?></p>
                     <p><strong>Phone 2:</strong> <?= htmlspecialchars($details['phone_2']) ?></p>
                 <?php else: ?>

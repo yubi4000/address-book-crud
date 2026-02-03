@@ -74,7 +74,7 @@ require __DIR__ . '/partials/pagination.php';
                     <td><?= htmlspecialchars($p['last_name']) ?></td>
                     <td><?= htmlspecialchars($p['nickname']) ?></td>
                     <td><?= htmlspecialchars($p['city'] ?? '') ?></td>
-                    <td><?= htmlspecialchars($p['email'] ?? '') ?></td>
+                    <td><?= htmlspecialchars(strtolower($p['email'] ?? '')) ?></td>
                     <td>
                         <a href="view.php?id=<?= $p['id'] ?>" class="btn btn-warning btn-sm">See More</a>
                         <a href="edit.php?id=<?= $p['id'] ?>" class="btn btn-default btn-sm">Edit</a>

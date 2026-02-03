@@ -109,7 +109,7 @@ require __DIR__ . '/partials/header.php';
 
                 <div class="form-group">
                     <label>Email:</label>
-                    <input type="text" class="form-control" name="email" value="<?= htmlspecialchars($details['email'] ?? '') ?>">
+                    <input type="text" class="form-control" name="email" value="<?= htmlspecialchars(strtolower($details['email'] ?? '')) ?>">
                 </div>
 
                 <div class="form-group">

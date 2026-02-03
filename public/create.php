@@ -121,7 +121,7 @@ require __DIR__ . '/partials/header.php';
 
                 <div class="form-group">
                     <label>Email: <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="email" value="<?= htmlspecialchars($insertedData['email'] ?? '') ?>">
+                    <input type="text" class="form-control" name="email" value="<?= htmlspecialchars(strtolower($insertedData['email'] ?? '')) ?>">
                     <?php if (isset($errors['email'])): ?>
                         <p class="text-danger"><?= $errors['email'] ?></p>
                     <?php endif; ?>
