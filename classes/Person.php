@@ -91,16 +91,33 @@ class Person
         return (int) $stmt->fetchColumn();
     }
 
-    public function getPaginatedWithDetailsAndSearch(string $search, int $limit, int $offset): array
+    public function getPaginatedWithDetailsAndSearch(
+        string $search,
+        int $limit,
+        int $offset,
+        string $sort = 'last_name',
+        string $dir = 'asc'
+    ): array
     {
         $searchTerm = "%$search%";
+
+        $allowedSorts = [
+            'first_name' => 'p.first_name',
+            'last_name'  => 'p.last_name',
+            'nickname'   => 'p.nickname',
+            'city'       => 'd.city',
+            'email'      => 'd.email'
+        ];
+
+        $sortColumn = $allowedSorts[$sort] ?? $allowedSorts['last_name'];
+        $dir = strtolower($dir) === 'desc' ? 'DESC' : 'ASC';
 
         $stmt = $this->db->prepare(
             "SELECT p.*, d.street, d.number, d.city, d.zip_code, d.country, d.email, d.phone_1, d.phone_2
             FROM person p
             LEFT JOIN person_details d ON p.id = d.person_id
             WHERE p.first_name LIKE :search OR p.last_name LIKE :search OR p.nickname LIKE :search OR d.email LIKE :search OR d.city LIKE :search
-            ORDER BY p.first_name, p.last_name ASC
+            ORDER BY {$sortColumn} {$dir}, p.id DESC
             LIMIT :limit OFFSET :offset"
         );
 
@@ -140,4 +157,3 @@ class Person
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
-
