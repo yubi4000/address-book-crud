@@ -5,6 +5,8 @@ require_once __DIR__ . '/../classes/Person.php';
 require_once __DIR__ . '/../classes/PersonDetails.php';
 require_once __DIR__ . '/partials/csrf.php';
 require_once __DIR__ . '/partials/flash.php';
+require_once __DIR__ . '/partials/validation.php';
+require_once __DIR__ . '/partials/form_helpers.php';
 
 $db = (new Database())->getConnection();
 
@@ -51,38 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone1 = $detailsInput['phone_1'];
     $phone2 = $detailsInput['phone_2'];
 
+    $errors = validate_contact($personInput, $detailsInput);
+
     if (!csrf_verify()) {
         $errors['csrf'] = 'Invalid form submission. Please try again.';
-    }
-
-    if ($firstName === '') {
-        $errors['first_name'] = 'First name is required';
-    }
-
-    if ($lastName === '') {
-        $errors['last_name'] = 'Last name is required';
-    }
-
-    if ($normalizedEmail === '') {
-        $errors['email'] = 'Email is required';
-    } elseif (!filter_var($normalizedEmail, FILTER_VALIDATE_EMAIL)) {
-        $errors['email'] = 'Invalid email format';
-    }
-
-    if ($phone1 === '') {
-        $errors['phone_1'] = 'Phone 1 is required';
-    } elseif (!ctype_digit($phone1)) {
-        $errors['phone_1'] = 'Phone 1 must be numeric';
-    }
-
-    if ($zipCode === '') {
-        $errors['zip_code'] = 'Zip code is required';
-    } elseif (!ctype_digit($zipCode)) {
-        $errors['zip_code'] = 'Zip code must be numeric';
-    }
-
-    if ($phone2 !== '' && !ctype_digit($phone2)) {
-        $errors['phone_2'] = 'Phone 2 must be numeric';
     }
 
     if (empty($errors)) {
@@ -151,85 +125,10 @@ require __DIR__ . '/partials/header.php';
             <?php if (isset($errors['csrf'])): ?>
                 <p class="text-danger"><?= $errors['csrf'] ?></p>
             <?php endif; ?>
-            <form method="post">
-                <?= csrf_field() ?>
-                <div class="form-group">
-                    <label>First Name: <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="first_name" value="<?= htmlspecialchars($person['first_name']) ?>" required>
-                    <?php if (isset($errors['first_name'])): ?>
-                        <p class="text-danger"><?= $errors['first_name'] ?></p>
-                    <?php endif; ?>
-                </div>
-
-                <div class="form-group">
-                    <label>Last Name: <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="last_name" value="<?= htmlspecialchars($person['last_name']) ?>" required>
-                    <?php if (isset($errors['last_name'])): ?>
-                        <p class="text-danger"><?= $errors['last_name'] ?></p>
-                    <?php endif; ?>
-                </div>
-
-                <div class="form-group">
-                    <label>Nickname:</label>
-                    <input type="text" class="form-control" name="nickname" value="<?= htmlspecialchars($person['nickname']) ?>">
-                </div>
-
-                <h3>Contact Details</h3>
-                <div class="form-group">
-                    <label>Street:</label>
-                    <input type="text" class="form-control" name="street" value="<?= htmlspecialchars($details['street'] ?? '') ?>">
-                </div>
-
-                <div class="form-group">
-                    <label>Number:</label>
-                    <input type="text" class="form-control" name="number" value="<?= htmlspecialchars($details['number'] ?? '') ?>" inputmode="numeric" pattern="[0-9]+" title="Numbers only">
-                </div>
-
-                <div class="form-group">
-                    <label>City:</label>
-                    <input type="text" class="form-control" name="city" value="<?= htmlspecialchars($details['city'] ?? '') ?>">
-                </div>
-
-                <div class="form-group">
-                    <label>Zip Code: <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="zip_code" value="<?= htmlspecialchars($details['zip_code'] ?? '') ?>" required inputmode="numeric" pattern="[0-9]+" title="Numbers only">
-                    <?php if (isset($errors['zip_code'])): ?>
-                        <p class="text-danger"><?= $errors['zip_code'] ?></p>
-                    <?php endif; ?>
-                </div>
-
-                <div class="form-group">
-                    <label>Country:</label>
-                    <input type="text" class="form-control" name="country" value="<?= htmlspecialchars($details['country'] ?? '') ?>">
-                </div>
-
-                <div class="form-group">
-                    <label>Email: <span class="text-danger">*</span></label>
-                    <input type="email" class="form-control" name="email" value="<?= htmlspecialchars(strtolower($details['email'] ?? '')) ?>" required>
-                    <?php if (isset($errors['email'])): ?>
-                        <p class="text-danger"><?= $errors['email'] ?></p>
-                    <?php endif; ?>
-                </div>
-
-                <div class="form-group">
-                    <label>Phone 1: <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="phone_1" value="<?= htmlspecialchars($details['phone_1'] ?? '') ?>" required inputmode="numeric" pattern="[0-9]+" title="Numbers only">
-                    <?php if (isset($errors['phone_1'])): ?>
-                        <p class="text-danger"><?= $errors['phone_1'] ?></p>
-                    <?php endif; ?>
-                </div>
-
-                <div class="form-group">
-                    <label>Phone 2:</label>
-                    <input type="text" class="form-control" name="phone_2" value="<?= htmlspecialchars($details['phone_2'] ?? '') ?>" inputmode="numeric" pattern="[0-9]+" title="Numbers only">
-                    <?php if (isset($errors['phone_2'])): ?>
-                        <p class="text-danger"><?= $errors['phone_2'] ?></p>
-                    <?php endif; ?>
-                </div>
-
-                <button type="submit" class="btn btn-warning">Update</button>
-                <a href="index.php" class="btn btn-default">Back to list</a>
-            </form>
+            <?php
+            $formData = array_merge($person, $details ?? []);
+            render_person_form($formData, $errors, 'Update');
+            ?>
         </div>
     </div>
 
