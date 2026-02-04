@@ -8,10 +8,12 @@ body {
     margin-bottom: 50px;
 }
 
+/* table */
 #table-header {
     background-color: orange;
 }
 
+/* table -> overwriting default color settings */
 .table {
     background-color: #fff;
 }
@@ -26,4 +28,17 @@ body {
     background-color: #f0ad4e;
     border-color: #eea236;
     color: #fff;
+}
+
+/* single contact page */
+
+#single-body {
+	background-color: white;
+	padding-top: 15px;
+	padding-right: 15px;
+	padding-bottom: 35px;
+	margin-bottom: 30px;
+	-webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
 }

@@ -4,7 +4,7 @@
 <form method="post">
     <?= csrf_field() ?>
 
-    <div class="form-group">
+    <div class="form-group col-md-4">
         <label>First Name: <span class="text-danger">*</span></label>
         <input type="text" class="form-control" name="first_name" value="<?= htmlspecialchars($formData['first_name'] ?? '') ?>" required>
         <?php if (isset($errors['first_name'])): ?>
@@ -12,7 +12,7 @@
         <?php endif; ?>
     </div>
 
-    <div class="form-group">
+    <div class="form-group col-md-4">
         <label>Last Name: <span class="text-danger">*</span></label>
         <input type="text" class="form-control" name="last_name" value="<?= htmlspecialchars($formData['last_name'] ?? '') ?>" required>
         <?php if (isset($errors['last_name'])): ?>
@@ -20,13 +20,16 @@
         <?php endif; ?>
     </div>
 
-    <div class="form-group">
+    <div class="form-group col-md-4">
         <label>Nickname:</label>
         <input type="text" class="form-control" name="nickname" value="<?= htmlspecialchars($formData['nickname'] ?? '') ?>">
     </div>
 
     <?php render_contact_details_form($formData, $errors); ?>
-
-    <button type="submit" class="btn btn-warning"><?= htmlspecialchars($submitLabel ?? 'Save') ?></button>
-    <a href="index.php" class="btn btn-default">Back to list</a>
+    
+    <div class="col-md-12 submit_button">
+        <a href="index.php" class="btn btn-warning col-md-2">Cancel</a>
+        <button type="submit" class="btn btn-primary   col-md-2 pull-right"><?= htmlspecialchars($submitLabel ?? 'Save') ?></button>        
+    </div>
+    
 </form>

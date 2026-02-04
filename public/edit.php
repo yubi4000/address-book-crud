@@ -113,23 +113,24 @@ if (!empty($errors) && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ?>
 <?php
-$pageTitle = 'Edit Person';
-$activePage = 'edit';
-require __DIR__ . '/partials/header.php';
+    $pageTitle = 'Edit Person';
+    $activePage = 'edit';
+    require __DIR__ . '/partials/header.php';
 ?>
 
     <div class="container">
-        <div class="row col-md-12 col-md-offset-0">
-            <h1>Edit Person</h1>
-            <p class="text-muted"><span class="text-danger">*</span> Required fields</p>
-            <?php if (isset($errors['csrf'])): ?>
-                <p class="text-danger"><?= $errors['csrf'] ?></p>
-            <?php endif; ?>
-            <?php
-            $formData = array_merge($person, $details ?? []);
-            render_person_form($formData, $errors, 'Update');
-            ?>
-        </div>
-    </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <?php if (isset($errors['csrf'])): ?>
+                    <p class="text-danger"><?= $errors['csrf'] ?></p>
+                <?php endif; ?>
+                
+                <?php
+                $formData = array_merge($person, $details ?? []);
+                render_person_form($formData, $errors, 'Update');
+                ?>
+            </div>
+        </div><!-- row -->       
+    </div><!-- container --> 
 
 <?php require __DIR__ . '/partials/footer.php'; ?>

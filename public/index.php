@@ -51,6 +51,7 @@ $persons = $personModel->getPaginatedWithDetailsAndSearch(
 ?>
 
 <?php
+
 $pageTitle = 'Address Book';
 $activePage = 'index';
 $showSearch = true;
@@ -62,8 +63,10 @@ $sortIcon = function (string $column) use ($sort, $dir): string {
     $icon = $dir === 'asc' ? 'glyphicon-triangle-top' : 'glyphicon-triangle-bottom';
     return ' <span class="glyphicon ' . $icon . '"></span>';
 };
+
 require __DIR__ . '/partials/header.php';
 require __DIR__ . '/partials/pagination.php';
+
 ?>
 
     <div class="container">
@@ -78,7 +81,6 @@ require __DIR__ . '/partials/pagination.php';
                 <tr id="table-header">
                     <th><a href="?page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=first_name&dir=<?= $sort === 'first_name' ? $nextDir : 'asc' ?>">First Name<?= $sortIcon('first_name') ?></a></th>
                     <th><a href="?page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=last_name&dir=<?= $sort === 'last_name' ? $nextDir : 'asc' ?>">Last Name<?= $sortIcon('last_name') ?></a></th>
-                    <th><a href="?page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=nickname&dir=<?= $sort === 'nickname' ? $nextDir : 'asc' ?>">Nickname<?= $sortIcon('nickname') ?></a></th>
                     <th><a href="?page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=city&dir=<?= $sort === 'city' ? $nextDir : 'asc' ?>">City<?= $sortIcon('city') ?></a></th>
                     <th><a href="?page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=email&dir=<?= $sort === 'email' ? $nextDir : 'asc' ?>">Email<?= $sortIcon('email') ?></a></th>
                     <th id="details_button" class="col-md-1">Actions</th>
@@ -93,12 +95,11 @@ require __DIR__ . '/partials/pagination.php';
                     <tr>
                         <td><?= htmlspecialchars($p['first_name']) ?></td>
                         <td><?= htmlspecialchars($p['last_name']) ?></td>
-                        <td><?= htmlspecialchars($p['nickname']) ?></td>
                         <td><?= htmlspecialchars($p['city'] ?? '') ?></td>
                         <td><?= htmlspecialchars(strtolower($p['email'] ?? '')) ?></td>
-                        <td>
-                            <a href="view.php?id=<?= $p['id'] ?>" class="btn btn-warning btn-sm">See More</a>
-                            <a href="edit.php?id=<?= $p['id'] ?>" class="btn btn-default btn-sm">Edit</a>
+                        <td class="text-center">   
+                            <a href="view.php?id=<?= $p['id'] ?>" class="btn btn-warning btn-sm ">See More</a>
+                            <a href="edit.php?id=<?= $p['id'] ?>" class="btn btn-primary btn-sm">Edit</a>
                             <button
                                 type="button"
                                 class="btn btn-danger btn-sm"
@@ -106,7 +107,7 @@ require __DIR__ . '/partials/pagination.php';
                                 data-target="#deleteModal"
                                 data-person-id="<?= (int) $p['id'] ?>"
                                 data-person-name="<?= htmlspecialchars($p['first_name'] . ' ' . $p['last_name']) ?>"
-                            >Delete</button>
+                            >Delete</button>                           
                         </td>
                     </tr>
                     <?php endforeach; ?>

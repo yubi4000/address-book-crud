@@ -35,31 +35,39 @@ require __DIR__ . '/partials/header.php';
 ?>
 
     <div class="container">
-        <div class="row col-md-12 col-md-offset-0">
-            <h1>Contact Details</h1>
-            <p>
-                <a href="index.php" class="btn btn-default btn-sm">Back to list</a>
-                <a href="edit.php?id=<?= $person['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
-            </p>
-
-            <div class="well">
-                <h2><?= htmlspecialchars($person['first_name'] . ' ' . $person['last_name']) ?></h2>
-                <p><strong>Nickname:</strong> <?= htmlspecialchars($person['nickname']) ?></p>
+        <div class="row col-md-10 col-md-offset-1 text-center">
+            <div id="single-body" class="col-md-8 col-md-offset-2">	
+                <h3><?= htmlspecialchars($person['first_name'] . ' ' . $person['last_name']) . ' (' . $person['nickname'] . ')'?></h3>
 
                 <?php if ($details): ?>
-                    <p><strong>Street:</strong> <?= htmlspecialchars($details['street']) ?></p>
-                    <p><strong>Number:</strong> <?= htmlspecialchars($details['number']) ?></p>
-                    <p><strong>City:</strong> <?= htmlspecialchars($details['city']) ?></p>
-                    <p><strong>Zip Code:</strong> <?= htmlspecialchars($details['zip_code']) ?></p>
-                    <p><strong>Country:</strong> <?= htmlspecialchars($details['country']) ?></p>
-                    <p><strong>Email:</strong> <?= htmlspecialchars(strtolower($details['email'])) ?></p>
-                    <p><strong>Phone 1:</strong> <?= htmlspecialchars($details['phone_1']) ?></p>
-                    <p><strong>Phone 2:</strong> <?= htmlspecialchars($details['phone_2']) ?></p>
+                    <div class="col-md-8 col-md-offset-2">
+                        <hr>
+                        <h4>Address:</h4>
+                        <?= htmlspecialchars($details['street'] . ' ' . $details['number']) ?></p>
+                        <?= htmlspecialchars($details['city'] . ' ' . $details['zip_code']) ?></p>
+                        <?= htmlspecialchars($details['country']) ?></p>
+                        <hr>
+                    </div>
+                    <div class="col-md-8 col-md-offset-2">
+                        <h4>Phone(s) and Email:</h4>
+                    <?= htmlspecialchars(strtolower($details['email'])) ?></p>
+                    <?= htmlspecialchars($details['phone_1']) ?></p>
+                    <?= htmlspecialchars($details['phone_2']) ?></p>
+                    </div>
+                    
                 <?php else: ?>
                     <p>No additional details available.</p>
                 <?php endif; ?>
+                                              
+            </div><!-- single-body -->   
+            <div class="row col-md-8 col-md-offset-2">
+                <p>
+                    <a href="index.php" class="btn btn-danger col-md-2 pull-left">Back</a>
+                    <a href="edit.php?id=<?= $person['id'] ?>" class="btn btn-success col-md-2 pull-right">Edit</a>
+                </p>
             </div>
-        </div>
-    </div>
+
+        </div><!-- row -->
+    </div><!-- container -->	
 
 <?php require __DIR__ . '/partials/footer.php'; ?>

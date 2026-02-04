@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/../classes/Database.php';
 require_once __DIR__ . '/../classes/Person.php';
 require_once __DIR__ . '/partials/csrf.php';
