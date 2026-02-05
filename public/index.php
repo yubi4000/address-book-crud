@@ -97,8 +97,8 @@ require __DIR__ . '/partials/pagination.php';
                         <td><?= htmlspecialchars(strtolower($p['email'] ?? '')) ?></td>
                         <td><?= htmlspecialchars($p['phone_1'] ?? '') ?></td>
                         <td class="text-center actions-inline">   
-                            <a href="view.php?id=<?= $p['id'] ?>" class="btn btn-warning btn-sm">More Details</a>
-                            <a href="edit.php?id=<?= $p['id'] ?>" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="view.php?id=<?= $p['id'] ?>&page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>&dir=<?= urlencode($dir) ?>" class="btn btn-warning btn-sm">More Details</a>
+                            <a href="edit.php?id=<?= $p['id'] ?>&page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>&dir=<?= urlencode($dir) ?>" class="btn btn-primary btn-sm">Edit</a>
                             <button
                                 type="button"
                                 class="btn btn-danger btn-sm"

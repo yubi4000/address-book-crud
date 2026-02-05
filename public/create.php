@@ -101,7 +101,7 @@ require __DIR__ . '/partials/header.php';
                 <?php if (isset($errors['csrf'])): ?>
                     <p class="text-danger"><?= $errors['csrf'] ?></p>
                 <?php endif; ?>
-                <?php render_person_form($formData, $errors, 'Save'); ?>
+                <?php render_person_form($formData, $errors, 'Save', 'index.php'); ?>
             </div>
         </div>
     </div>

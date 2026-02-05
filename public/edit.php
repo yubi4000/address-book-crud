@@ -22,6 +22,14 @@ if (!isset($_GET['id'])) {
 
 $id = (int) $_GET['id'];
 
+$backParams = [];
+foreach (['page', 'search', 'sort', 'dir'] as $key) {
+    if (isset($_GET[$key])) {
+        $backParams[$key] = (string) $_GET[$key];
+    }
+}
+$backUrl = 'index.php' . (!empty($backParams) ? ('?' . http_build_query($backParams)) : '');
+
 // POST: update osobe
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $personInput = $personModel->normalizeInput([
@@ -82,7 +90,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $detailsModel->update($id, $detailsData);
 
         flash_set('status', 'Contact updated successfully.', 'success');
-        header('Location: index.php');
+        $postBackParams = [];
+        foreach (['page', 'search', 'sort', 'dir'] as $key) {
+            if (isset($_POST[$key])) {
+                $postBackParams[$key] = (string) $_POST[$key];
+            }
+        }
+        $redirectUrl = 'index.php' . (!empty($postBackParams) ? ('?' . http_build_query($postBackParams)) : '');
+        header('Location: ' . $redirectUrl);
         exit;
     }
 }
@@ -127,7 +142,7 @@ if (!empty($errors) && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 <?php
                 $formData = array_merge($person, $details ?? []);
-                render_person_form($formData, $errors, 'Update');
+                render_person_form($formData, $errors, 'Update', $backUrl, $backParams);
                 ?>
             </div>
         </div><!-- row -->       

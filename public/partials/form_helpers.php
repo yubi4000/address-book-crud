@@ -1,6 +1,6 @@
 <?php
 
-function render_person_form(array $formData, array $errors, string $submitLabel): void
+function render_person_form(array $formData, array $errors, string $submitLabel, string $backUrl = 'index.php', array $backParams = []): void
 {
     require __DIR__ . '/person_form.php';
 }

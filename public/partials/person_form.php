@@ -1,8 +1,13 @@
 <?php
-// expects $formData, $errors, $submitLabel
+// expects $formData, $errors, $submitLabel, $backUrl, $backParams
 ?>
 <form method="post">
     <?= csrf_field() ?>
+    <?php if (!empty($backParams)): ?>
+        <?php foreach ($backParams as $key => $value): ?>
+            <input type="hidden" name="<?= htmlspecialchars($key) ?>" value="<?= htmlspecialchars((string) $value) ?>">
+        <?php endforeach; ?>
+    <?php endif; ?>
 
     <div class="form-group col-md-4">
         <label>First Name: <span class="text-danger">*</span></label>
@@ -28,7 +33,7 @@
     <?php render_contact_details_form($formData, $errors); ?>
     
     <div class="col-md-12 submit_button">
-        <a href="index.php" class="btn btn-warning col-md-2">Cancel</a>
+        <a href="<?= htmlspecialchars($backUrl ?? 'index.php') ?>" class="btn btn-warning col-md-2">Cancel</a>
         <button type="submit" class="btn btn-primary   col-md-2 pull-right"><?= htmlspecialchars($submitLabel ?? 'Save') ?></button>        
     </div>
     

@@ -27,6 +27,22 @@ if (!$person) {
 // fetch the details
 $details = $detailsModel->getByPersonId($id);
 
+$backParams = [];
+if (isset($_GET['page'])) {
+    $backParams['page'] = (int) $_GET['page'];
+}
+if (isset($_GET['search'])) {
+    $backParams['search'] = (string) $_GET['search'];
+}
+if (isset($_GET['sort'])) {
+    $backParams['sort'] = (string) $_GET['sort'];
+}
+if (isset($_GET['dir'])) {
+    $backParams['dir'] = (string) $_GET['dir'];
+}
+$backUrl = 'index.php' . (!empty($backParams) ? ('?' . http_build_query($backParams)) : '');
+$editUrl = 'edit.php?id=' . $person['id'] . (!empty($backParams) ? ('&' . http_build_query($backParams)) : '');
+
 ?>
 <?php
 $pageTitle = 'Contact Details';
@@ -37,7 +53,11 @@ require __DIR__ . '/partials/header.php';
     <div class="container">
         <div class="row col-md-10 col-md-offset-1 text-center">
             <div id="single-body" class="col-md-8 col-md-offset-2 mt-50">	
-                <h3><?= htmlspecialchars($person['first_name'] . ' ' . $person['last_name']) . ' (' . $person['nickname'] . ')'?></h3>
+                <h3><?= htmlspecialchars($person['first_name'] . ' ' . $person['last_name']);
+                    if(!empty($person['nickname'])) {
+                        echo " (" . $person['nickname'] . ")";
+                    }?>
+                </h3>
 
                 <?php if ($details): ?>
                     <div class="col-md-8 col-md-offset-2">
@@ -62,8 +82,8 @@ require __DIR__ . '/partials/header.php';
             </div><!-- single-body -->   
             <div class="row col-md-8 col-md-offset-2">
                 <p>
-                    <a href="index.php" class="btn btn-danger col-md-2 pull-left">Back</a>
-                    <a href="edit.php?id=<?= $person['id'] ?>" class="btn btn-success col-md-2 pull-right">Edit</a>
+                    <a href="<?= htmlspecialchars($backUrl) ?>" class="btn btn-danger col-md-2 pull-left">Back</a>
+                    <a href="<?= htmlspecialchars($editUrl) ?>" class="btn btn-success col-md-2 pull-right">Edit</a>
                 </p>
             </div>
 
