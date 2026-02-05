@@ -16,9 +16,8 @@ $search = $_GET['search'] ?? '';
 $allowedSorts = [
     'first_name',
     'last_name',
-    'nickname',
-    'city',
-    'email'
+    'email',
+    'phone_1'
 ];
 
 $sort = $_GET['sort'] ?? 'first_name';
@@ -81,9 +80,9 @@ require __DIR__ . '/partials/pagination.php';
                 <tr id="table-header">
                     <th><a href="?page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=first_name&dir=<?= $sort === 'first_name' ? $nextDir : 'asc' ?>">First Name<?= $sortIcon('first_name') ?></a></th>
                     <th><a href="?page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=last_name&dir=<?= $sort === 'last_name' ? $nextDir : 'asc' ?>">Last Name<?= $sortIcon('last_name') ?></a></th>
-                    <th><a href="?page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=city&dir=<?= $sort === 'city' ? $nextDir : 'asc' ?>">City<?= $sortIcon('city') ?></a></th>
                     <th><a href="?page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=email&dir=<?= $sort === 'email' ? $nextDir : 'asc' ?>">Email<?= $sortIcon('email') ?></a></th>
-                    <th id="details_button" class="col-md-1">Actions</th>
+                    <th><a href="?page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=phone_1&dir=<?= $sort === 'phone_1' ? $nextDir : 'asc' ?>">Phone<?= $sortIcon('phone_1') ?></a></th>
+                    <th id="details_button" class="col-md-1"></th>
                 </tr>
 
                 <?php if (empty($persons)): ?>
@@ -94,11 +93,11 @@ require __DIR__ . '/partials/pagination.php';
                     <?php foreach ($persons as $p): ?>
                     <tr>
                         <td><?= htmlspecialchars($p['first_name']) ?></td>
-                        <td><?= htmlspecialchars($p['last_name']) ?></td>
-                        <td><?= htmlspecialchars($p['city'] ?? '') ?></td>
+                        <td><?= htmlspecialchars($p['last_name']) ?></td>          
                         <td><?= htmlspecialchars(strtolower($p['email'] ?? '')) ?></td>
-                        <td class="text-center">   
-                            <a href="view.php?id=<?= $p['id'] ?>" class="btn btn-warning btn-sm ">See More</a>
+                        <td><?= htmlspecialchars($p['phone_1'] ?? '') ?></td>
+                        <td class="text-center actions-inline">   
+                            <a href="view.php?id=<?= $p['id'] ?>" class="btn btn-warning btn-sm">More Details</a>
                             <a href="edit.php?id=<?= $p['id'] ?>" class="btn btn-primary btn-sm">Edit</a>
                             <button
                                 type="button"

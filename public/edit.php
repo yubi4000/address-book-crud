@@ -120,7 +120,7 @@ if (!empty($errors) && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-8 col-md-offset-2 mt-50">
                 <?php if (isset($errors['csrf'])): ?>
                     <p class="text-danger"><?= $errors['csrf'] ?></p>
                 <?php endif; ?>
