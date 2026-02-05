@@ -69,7 +69,7 @@ require __DIR__ . '/partials/pagination.php';
 ?>
 
     <div class="container">
-        <div class="row col-md-12 col-md-offset-0">
+        <div class="row col-md-12 col-md-offset-0 mt-50">
             <?php $flash = flash_get('status'); ?>
             <?php if ($flash): ?>
                 <div class="alert alert-<?= htmlspecialchars($flash['type']) ?>">
@@ -77,7 +77,7 @@ require __DIR__ . '/partials/pagination.php';
                 </div>
             <?php endif; ?>
             <table class="table table-hover">
-                <tr id="table-header">
+                <tr id="table-header" class="table-header">
                     <th><a href="?page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=first_name&dir=<?= $sort === 'first_name' ? $nextDir : 'asc' ?>">First Name<?= $sortIcon('first_name') ?></a></th>
                     <th><a href="?page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=last_name&dir=<?= $sort === 'last_name' ? $nextDir : 'asc' ?>">Last Name<?= $sortIcon('last_name') ?></a></th>
                     <th><a href="?page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=email&dir=<?= $sort === 'email' ? $nextDir : 'asc' ?>">Email<?= $sortIcon('email') ?></a></th>

@@ -36,7 +36,7 @@ require __DIR__ . '/partials/header.php';
 
     <div class="container">
         <div class="row col-md-10 col-md-offset-1 text-center">
-            <div id="single-body" class="col-md-8 col-md-offset-2">	
+            <div id="single-body" class="col-md-8 col-md-offset-2 mt-50">	
                 <h3><?= htmlspecialchars($person['first_name'] . ' ' . $person['last_name']) . ' (' . $person['nickname'] . ')'?></h3>
 
                 <?php if ($details): ?>

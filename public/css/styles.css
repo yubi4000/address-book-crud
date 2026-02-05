@@ -13,10 +13,42 @@ body {
     background-color: orange;
 }
 
+#table-header th {
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+#table-header,
+#table-header a {
+    color: #000;
+}
+
+#table-header a {
+    text-decoration: none;
+    color: #222;
+    transition: color 150ms ease-in-out;
+}
+
+#table-header a:hover,
+#table-header a:focus {
+    color: #000;
+    text-decoration: none;
+}
+
 /* table -> overwriting default color settings */
 .table {
     background-color: #fff;
 }
+
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+    padding: 7px 10px;
+}
+
 
 #details_button {
     padding-left: 0;
