@@ -33,7 +33,7 @@ Small PHP MVC-style address book app with CRUD, search, sort, pagination, and Bo
 ## Usage
 - Open `public/index.php` in the browser
 - Add contacts via “Add New Person”
-- Use search and sorting on the list
+- Use search and sorting on the list (search is not shown on create/edit pages)
 
 ## Security Notes
 - CSRF protection is enabled for create, edit, and delete.
