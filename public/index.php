@@ -31,7 +31,7 @@ $dir = strtolower($dir) === 'desc' ? 'desc' : 'asc';
 
 $nextDir = $dir === 'asc' ? 'desc' : 'asc';
 
-$perPage = 5; // koliko kontakata po stranici
+$perPage = 10; // hits per page
 $currentPage = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
 
 $totalRows = $personModel->getCountWithSearch($search);
@@ -77,7 +77,7 @@ require __DIR__ . '/partials/pagination.php';
                 </div>
             <?php endif; ?>
             <table class="table table-hover">
-                <tr id="table-header" class="table-header">
+                <tr id="table-header">
                     <th><a href="?page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=first_name&dir=<?= $sort === 'first_name' ? $nextDir : 'asc' ?>">First Name<?= $sortIcon('first_name') ?></a></th>
                     <th><a href="?page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=last_name&dir=<?= $sort === 'last_name' ? $nextDir : 'asc' ?>">Last Name<?= $sortIcon('last_name') ?></a></th>
                     <th><a href="?page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=email&dir=<?= $sort === 'email' ? $nextDir : 'asc' ?>">Email<?= $sortIcon('email') ?></a></th>
@@ -97,8 +97,8 @@ require __DIR__ . '/partials/pagination.php';
                         <td><?= htmlspecialchars(strtolower($p['email'] ?? '')) ?></td>
                         <td><?= htmlspecialchars($p['phone_1'] ?? '') ?></td>
                         <td class="text-center actions-inline">   
-                            <a href="view.php?id=<?= $p['id'] ?>&page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>&dir=<?= urlencode($dir) ?>" class="btn btn-warning btn-sm">More Details</a>
-                            <a href="edit.php?id=<?= $p['id'] ?>&page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>&dir=<?= urlencode($dir) ?>" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="view.php?id=<?= $p['id'] ?>" class="btn btn-warning btn-sm">More Details</a>
+                            <a href="edit.php?id=<?= $p['id'] ?>" class="btn btn-primary btn-sm">Edit</a>
                             <button
                                 type="button"
                                 class="btn btn-danger btn-sm"
