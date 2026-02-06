@@ -46,10 +46,14 @@ public/             # Entry points, views, assets
 public/partials/    # Shared UI + helpers
 ```
 
+## Screenshots
+![Preview](public/docs/screenshots/Preview.png)
+![List View](public/docs/screenshots/Contact_Details.png)
+![Add New Contact](public/docs/screenshots/Add_New_Contact.png)
+![Edit Contact Details](public/docs/screenshots/Edit_Contact_Details.png)
+![Delete Contact](public/docs/screenshots/Delete_Contact.png)
+
 ## Roadmap Ideas
 - Extract a shared layout for all pages
 - Add minimal tests
 - Dockerize for easier setup
-
-## License
-MIT (or replace with your preferred license)
