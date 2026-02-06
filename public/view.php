@@ -69,7 +69,7 @@ require __DIR__ . '/partials/header.php';
                         <hr>
                     </div>
                     <div class="col-md-8 col-md-offset-2">
-                        <h4>Phone(s) and Email:</h4>
+                        <h4>Email and Phone(s):</h4>
                     <?= htmlspecialchars(strtolower($details['email'])) ?></p>
                     <?= htmlspecialchars($details['phone_1']) ?></p>
                     <?= htmlspecialchars($details['phone_2']) ?></p>

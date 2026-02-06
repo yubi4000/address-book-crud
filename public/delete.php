@@ -13,8 +13,16 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !csrf_verify()) {
     exit;
 }
 
+$backParams = [];
+foreach (['page', 'search', 'sort', 'dir'] as $key) {
+    if (isset($_POST[$key])) {
+        $backParams[$key] = (string) $_POST[$key];
+    }
+}
+$backUrl = 'index.php' . (!empty($backParams) ? ('?' . http_build_query($backParams)) : '');
+
 if (!isset($_POST['id'])) {
-    header('Location: index.php');
+    header('Location: ' . $backUrl);
     exit;
 }
 
@@ -22,5 +30,5 @@ $id = (int) $_POST['id'];
 $personModel->delete($id);
 
 flash_set('status', 'Contact deleted successfully.', 'success');
-header('Location: index.php');
+header('Location: ' . $backUrl);
 exit;

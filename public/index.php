@@ -97,8 +97,8 @@ require __DIR__ . '/partials/pagination.php';
                         <td><?= htmlspecialchars(strtolower($p['email'] ?? '')) ?></td>
                         <td><?= htmlspecialchars($p['phone_1'] ?? '') ?></td>
                         <td class="text-center actions-inline">   
-                            <a href="view.php?id=<?= $p['id'] ?>" class="btn btn-warning btn-sm">More Details</a>
-                            <a href="edit.php?id=<?= $p['id'] ?>" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="view.php?id=<?= $p['id'] ?>&page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>&dir=<?= urlencode($dir) ?>" class="btn btn-warning btn-sm">More Details</a>
+                            <a href="edit.php?id=<?= $p['id'] ?>&page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>&dir=<?= urlencode($dir) ?>" class="btn btn-primary btn-sm">Edit</a>
                             <button
                                 type="button"
                                 class="btn btn-danger btn-sm"
@@ -130,6 +130,10 @@ require __DIR__ . '/partials/pagination.php';
                     <div class="modal-body">
                         <?= csrf_field() ?>
                         <input type="hidden" name="id" id="delete-person-id" value="">
+                        <input type="hidden" name="page" value="<?= htmlspecialchars((string) $currentPage) ?>">
+                        <input type="hidden" name="search" value="<?= htmlspecialchars((string) $search) ?>">
+                        <input type="hidden" name="sort" value="<?= htmlspecialchars((string) $sort) ?>">
+                        <input type="hidden" name="dir" value="<?= htmlspecialchars((string) $dir) ?>">
                         <p>Are you sure you want to delete <strong id="delete-person-name">this contact</strong>?</p>
                     </div>
                     <div class="modal-footer">
@@ -140,18 +144,5 @@ require __DIR__ . '/partials/pagination.php';
             </div>
         </div>
     </div>
-
-    <script>
-        (function () {
-            $('#deleteModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget);
-                var personId = button.data('person-id');
-                var personName = button.data('person-name');
-
-                $('#delete-person-id').val(personId);
-                $('#delete-person-name').text(personName || 'this contact');
-            });
-        })();
-    </script>
 
 <?php require __DIR__ . '/partials/footer.php'; ?>
