@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= htmlspecialchars($pageTitle ?? 'Address Book') ?></title>
+    <title><?= esc($pageTitle ?? 'Address Book') ?></title>
 
     <!-- Bootstrap 3 (CDN) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -30,11 +30,11 @@
                 </ul>
                 <?php if (!empty($showSearch)): ?>
                     <form class="navbar-form navbar-left pull-right" method="get" action="" role="search">
-                        <input type="hidden" name="sort" value="<?= htmlspecialchars($sort ?? '') ?>">
-                        <input type="hidden" name="dir" value="<?= htmlspecialchars($dir ?? '') ?>">
+                        <input type="hidden" name="sort" value="<?= esc($sort ?? '') ?>">
+                        <input type="hidden" name="dir" value="<?= esc($dir ?? '') ?>">
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="search" value="<?= htmlspecialchars($search ?? '') ?>" placeholder="Search by name, email, city...">
+                                <input type="text" class="form-control" name="search" value="<?= esc($search ?? '') ?>" placeholder="Search by name, email, city...">
                                 <?php if (!empty($search)): ?>
                                     <span class="input-group-btn">
                                         <button

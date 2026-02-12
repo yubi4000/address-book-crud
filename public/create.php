@@ -1,13 +1,5 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-require_once __DIR__ . '/../classes/Database.php';
-require_once __DIR__ . '/../classes/Person.php';
-require_once __DIR__ . '/../classes/PersonDetails.php';
-require_once __DIR__ . '/partials/csrf.php';
-require_once __DIR__ . '/partials/flash.php';
-require_once __DIR__ . '/partials/validation.php';
+require_once __DIR__ . '/../bootstrap.php';
 require_once __DIR__ . '/partials/form_helpers.php';
 
 $db = (new Database())->getConnection();

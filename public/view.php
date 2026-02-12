@@ -1,8 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../classes/Database.php';
-require_once __DIR__ . '/../classes/Person.php';
-require_once __DIR__ . '/../classes/PersonDetails.php';
+require_once __DIR__ . '/../bootstrap.php';
 
 $db = (new Database())->getConnection();
 $personModel = new Person($db);
@@ -53,7 +51,7 @@ require __DIR__ . '/partials/header.php';
     <div class="container">
         <div class="row col-md-10 col-md-offset-1 text-center">
             <div id="single-body" class="col-md-8 col-md-offset-2 mt-50">	
-                <h3><?= htmlspecialchars($person['first_name'] . ' ' . $person['last_name']);
+                <h3><?= esc($person['first_name'] . ' ' . $person['last_name']);
                     if(!empty($person['nickname'])) {
                         echo " (" . $person['nickname'] . ")";
                     }?>
@@ -63,16 +61,16 @@ require __DIR__ . '/partials/header.php';
                     <div class="col-md-8 col-md-offset-2">
                         <hr>
                         <h4>Address:</h4>
-                        <?= htmlspecialchars($details['street'] . ' ' . $details['number']) ?></p>
-                        <?= htmlspecialchars($details['city'] . ' ' . $details['zip_code']) ?></p>
-                        <?= htmlspecialchars($details['country']) ?></p>
+                        <?= esc($details['street'] . ' ' . $details['number']) ?></p>
+                        <?= esc($details['city'] . ' ' . $details['zip_code']) ?></p>
+                        <?= esc($details['country']) ?></p>
                         <hr>
                     </div>
                     <div class="col-md-8 col-md-offset-2">
                         <h4>Email and Phone(s):</h4>
-                    <?= htmlspecialchars(strtolower($details['email'])) ?></p>
-                    <?= htmlspecialchars($details['phone_1']) ?></p>
-                    <?= htmlspecialchars($details['phone_2']) ?></p>
+                    <?= esc(strtolower($details['email'])) ?></p>
+                    <?= esc($details['phone_1']) ?></p>
+                    <?= esc($details['phone_2']) ?></p>
                     </div>
                     
                 <?php else: ?>
@@ -82,8 +80,8 @@ require __DIR__ . '/partials/header.php';
             </div><!-- single-body -->   
             <div class="row col-md-8 col-md-offset-2">
                 <p>
-                    <a href="<?= htmlspecialchars($backUrl) ?>" class="btn btn-danger col-md-2 pull-left">Back</a>
-                    <a href="<?= htmlspecialchars($editUrl) ?>" class="btn btn-success col-md-2 pull-right">Edit</a>
+                    <a href="<?= esc($backUrl) ?>" class="btn btn-danger col-md-2 pull-left">Back</a>
+                    <a href="<?= esc($editUrl) ?>" class="btn btn-success col-md-2 pull-right">Edit</a>
                 </p>
             </div>
 

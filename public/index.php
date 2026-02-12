@@ -1,9 +1,6 @@
 <?php
+require_once __DIR__ . '/../bootstrap.php';
 
-require_once __DIR__ . '/../classes/Database.php';
-require_once __DIR__ . '/../classes/Person.php';
-require_once __DIR__ . '/partials/csrf.php';
-require_once __DIR__ . '/partials/flash.php';
 
 // konekcija ka bazi
 $db = (new Database())->getConnection();
@@ -64,7 +61,6 @@ $sortIcon = function (string $column) use ($sort, $dir): string {
 };
 
 require __DIR__ . '/partials/header.php';
-require __DIR__ . '/partials/pagination.php';
 
 ?>
 
@@ -72,8 +68,8 @@ require __DIR__ . '/partials/pagination.php';
         <div class="row col-md-12 col-md-offset-0 mt-50">
             <?php $flash = flash_get('status'); ?>
             <?php if ($flash): ?>
-                <div class="alert alert-<?= htmlspecialchars($flash['type']) ?>">
-                    <?= htmlspecialchars($flash['message']) ?>
+                <div class="alert alert-<?= esc($flash['type']) ?>">
+                    <?= esc($flash['message']) ?>
                 </div>
             <?php endif; ?>
             <table class="table table-hover">
@@ -92,10 +88,10 @@ require __DIR__ . '/partials/pagination.php';
                 <?php else: ?>
                     <?php foreach ($persons as $p): ?>
                     <tr>
-                        <td><?= htmlspecialchars($p['first_name']) ?></td>
-                        <td><?= htmlspecialchars($p['last_name']) ?></td>          
-                        <td><?= htmlspecialchars(strtolower($p['email'] ?? '')) ?></td>
-                        <td><?= htmlspecialchars($p['phone_1'] ?? '') ?></td>
+                        <td><?= esc($p['first_name']) ?></td>
+                        <td><?= esc($p['last_name']) ?></td>          
+                        <td><?= esc(strtolower($p['email'] ?? '')) ?></td>
+                        <td><?= esc($p['phone_1'] ?? '') ?></td>
                         <td class="text-center actions-inline">   
                             <a href="view.php?id=<?= $p['id'] ?>&page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>&dir=<?= urlencode($dir) ?>" class="btn btn-warning btn-sm">More Details</a>
                             <a href="edit.php?id=<?= $p['id'] ?>&page=<?= $currentPage ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>&dir=<?= urlencode($dir) ?>" class="btn btn-primary btn-sm">Edit</a>
@@ -105,7 +101,7 @@ require __DIR__ . '/partials/pagination.php';
                                 data-toggle="modal"
                                 data-target="#deleteModal"
                                 data-person-id="<?= (int) $p['id'] ?>"
-                                data-person-name="<?= htmlspecialchars($p['first_name'] . ' ' . $p['last_name']) ?>"
+                                data-person-name="<?= esc($p['first_name'] . ' ' . $p['last_name']) ?>"
                             >Delete</button>                           
                         </td>
                     </tr>
@@ -130,10 +126,10 @@ require __DIR__ . '/partials/pagination.php';
                     <div class="modal-body">
                         <?= csrf_field() ?>
                         <input type="hidden" name="id" id="delete-person-id" value="">
-                        <input type="hidden" name="page" value="<?= htmlspecialchars((string) $currentPage) ?>">
-                        <input type="hidden" name="search" value="<?= htmlspecialchars((string) $search) ?>">
-                        <input type="hidden" name="sort" value="<?= htmlspecialchars((string) $sort) ?>">
-                        <input type="hidden" name="dir" value="<?= htmlspecialchars((string) $dir) ?>">
+                        <input type="hidden" name="page" value="<?= esc((string) $currentPage) ?>">
+                        <input type="hidden" name="search" value="<?= esc((string) $search) ?>">
+                        <input type="hidden" name="sort" value="<?= esc((string) $sort) ?>">
+                        <input type="hidden" name="dir" value="<?= esc((string) $dir) ?>">
                         <p>Are you sure you want to delete <strong id="delete-person-name">this contact</strong>?</p>
                     </div>
                     <div class="modal-footer">

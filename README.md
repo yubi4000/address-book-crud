@@ -1,4 +1,4 @@
-# Address Book MVC
+# Address Book CRUD
 
 Small PHP MVC-style address book app with CRUD, search, sort, pagination, and Bootstrap UI. This is a demo project focused on clean structure, validation, and basic security practices.
 

@@ -1,9 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../classes/Database.php';
-require_once __DIR__ . '/../classes/Person.php';
-require_once __DIR__ . '/partials/csrf.php';
-require_once __DIR__ . '/partials/flash.php';
+require_once __DIR__ . '/../bootstrap.php';
 
 $db = (new Database())->getConnection();
 $personModel = new Person($db);
