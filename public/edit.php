@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__ . '/../bootstrap.php';
-require_once __DIR__ . '/partials/form_helpers.php';
 
 $db = (new Database())->getConnection();
 

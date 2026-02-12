@@ -35,7 +35,6 @@ $totalRows = $personModel->getCountWithSearch($search);
 $totalPages = (int) ceil($totalRows / $perPage);
 
 $offset = ($currentPage - 1) * $perPage;
-
 $persons = $personModel->getPaginatedWithDetailsAndSearch(
     $search,
     $perPage,

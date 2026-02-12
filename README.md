@@ -48,7 +48,7 @@ A lightweight MVC-inspired PHP address book app with CRUD, search, sort, paginat
 ```
 classes/            # Models + DB
 public/             # Entry points, views, assets
-helpers/            # Utility helpers (csrf, flash, validation, esc, pagination)
+helpers/            # Utility helpers (csrf, flash, validation, esc, pagination, form helpers)
 public/partials/    # Shared HTML includes
 ```
 ## Architecture Notes
