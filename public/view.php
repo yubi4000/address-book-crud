@@ -6,7 +6,7 @@ $db = (new Database())->getConnection();
 $personModel = new Person($db);
 $detailsModel = new PersonDetails($db);
 
-// Proveri ID
+// check ID
 if (!isset($_GET['id'])) {
     header('Location: index.php');
     exit;

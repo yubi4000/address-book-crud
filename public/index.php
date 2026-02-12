@@ -2,10 +2,9 @@
 require_once __DIR__ . '/../bootstrap.php';
 
 
-// konekcija ka bazi
+// DB connection
 $db = (new Database())->getConnection();
 
-// kreiramo model
 $personModel = new Person($db);
 
 $search = $_GET['search'] ?? '';
