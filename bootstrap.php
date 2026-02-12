@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // autoload helpers
-foreach (glob(__DIR__ . "/public/helpers/*.php") as $file) {
+foreach (glob(__DIR__ . "/helpers/*.php") as $file) {
     require_once $file;
 }
 

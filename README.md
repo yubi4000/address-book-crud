@@ -1,6 +1,6 @@
 # Address Book CRUD
 
-Small PHP MVC-style address book app with CRUD, search, sort, pagination, and Bootstrap UI. This is a demo project focused on clean structure, validation, and basic security practices.
+A lightweight MVC-inspired PHP address book app with CRUD, search, sort, pagination, and Bootstrap UI. This is a demo project focused on clean structure, validation, and basic security practices.
 
 ## Features
 - Create, edit, view, delete contacts
@@ -30,6 +30,11 @@ Small PHP MVC-style address book app with CRUD, search, sort, pagination, and Bo
    - `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS`
 5. Point your web server to `public/`.
 
+## Development
+- Run with PHP built-in server:
+  - `php -S localhost:8000 -t public`
+- Default entry point: `public/index.php`
+
 ## Usage
 - Open `public/index.php` in the browser
 - Add contacts via “Add New Person”
@@ -43,8 +48,13 @@ Small PHP MVC-style address book app with CRUD, search, sort, pagination, and Bo
 ```
 classes/            # Models + DB
 public/             # Entry points, views, assets
-public/partials/    # Shared UI + helpers
+helpers/            # Utility helpers (csrf, flash, validation, esc, pagination)
+public/partials/    # Shared HTML includes
 ```
+## Architecture Notes
+This project follows a lightweight MVC-inspired structure without a framework.  
+A central bootstrap file loads configuration, helper functions, and core classes.  
+UI partials are reused across pages to avoid duplication.
 
 ## Screenshots
 ![Preview](public/docs/screenshots/Preview.png)
