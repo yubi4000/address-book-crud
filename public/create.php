@@ -21,7 +21,7 @@ $formData = [
     'phone_2'    => ''
 ];
 
-// ako je forma submitovana
+// if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $personInput = $personModel->normalizeInput([

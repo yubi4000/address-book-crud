@@ -8,7 +8,7 @@ $personModel = new Person($db);
 $detailsModel = new PersonDetails($db);
 $errors = [];
 
-// proveri da li imamo ID u GET
+// check if we have ID in GET request
 if (!isset($_GET['id'])) {
     header('Location: index.php');
     exit;
@@ -24,7 +24,7 @@ foreach (['page', 'search', 'sort', 'dir'] as $key) {
 }
 $backUrl = 'index.php' . (!empty($backParams) ? ('?' . http_build_query($backParams)) : '');
 
-// POST: update osobe
+// POST: Person update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $personInput = $personModel->normalizeInput([
         'first_name' => $_POST['first_name'] ?? '',
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $city = $detailsInput['city'];
     $zipCode = $detailsInput['zip_code'];
     $country = $detailsInput['country'];
-    $normalizedEmail = $detailsInput['email'];
+    $email = $detailsInput['email'];
     $phone1 = $detailsInput['phone_1'];
     $phone2 = $detailsInput['phone_2'];
 
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'city'     => $city,
             'zip_code' => $zipCode,
             'country'  => $country,
-            'email'    => $normalizedEmail,
+            'email'    => $email,
             'phone_1'  => $phone1,
             'phone_2'  => $phone2,
         ];
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-    // GET: učitaj podatke osobe
+    // GET: load Person data
     $person = $personModel->getById($id);
     if (!$person) {
         echo "Person not found";
@@ -114,7 +114,7 @@ if (!empty($errors) && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $details['city'] = $city;
     $details['zip_code'] = $zipCode;
     $details['country'] = $country;
-    $details['email'] = $normalizedEmail;
+    $details['email'] = $email;
     $details['phone_1'] = $phone1;
     $details['phone_2'] = $phone2;
 }

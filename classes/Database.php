@@ -10,8 +10,8 @@ class Database
 
         $host = getenv('DB_HOST') ?: 'localhost';
         $name = getenv('DB_NAME') ?: 'address_book';
-        $user = getenv('DB_USER') ?: 'addressbook';
-        $pass = getenv('DB_PASS') ?: 'Passw0rd!';
+        $user = getenv('DB_USER') ?: 'username_here';
+        $pass = getenv('DB_PASS') ?: 'password_here';
 
         $this->pdo = new PDO(
             "mysql:host={$host};dbname={$name};charset=utf8mb4",
